@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  edited with XMLSpy v2009 sp1 (http://www.altova.com) by SDE/SDV/ITE (Belgacom) 
+  -->
+<xsd:schema xmlns:tns="urn:v1.bealert.services.bgc" xmlns:vsscheck="urn:v1.checkservice.vss.objects.bgc" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:v1.bealert.services.bgc" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1">
+	<xsd:import namespace="urn:v1.checkservice.vss.objects.bgc" schemaLocation="http://ssr.web.bc/repository/VSS/OBJ/CheckService/1.0/VSS-OBJ-CheckService-1.0.xsd"/>
+	<xsd:element name="RequestDataCheckService" type="vsscheck:RequestDataCheckServiceType"/>
+	<xsd:element name="ResponseDataCheckService" type="vsscheck:ResponseDataCheckServiceType"/>
+	<xsd:element name="RequestDataGetRltsData" type="tns:RequestDataGetRltsDataType"/>
+	<xsd:element name="ResponseDataGetRltsDataDetails" type="tns:ResponseDataGetRltsDataType"/>
+	<xsd:element name="RequestDataGetGisData" type="tns:RequestDataGetGisDataType"/>
+	<xsd:element name="ResponseDataGetGisDataDetails" type="tns:ResponseDataGetGisDataType"/>
+	<xsd:complexType name="RequestDataGetRltsDataType">
+		<xsd:sequence>
+			<xsd:element name="ReqId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>MSISDN request ID</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FileName" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>MSISDN FIle name</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErrorCode" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Error Code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErrorMsg" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>ErrorMsg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" default="1.0"/>
+	</xsd:complexType>
+	<xsd:complexType name="ResponseDataGetRltsDataType">
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="xsd:string"/>
+			<xsd:element name="ErrorMsg" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RequestDataGetGisDataType">
+		<xsd:sequence>
+			<xsd:element name="ReqId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Cell request ID</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FileName" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Cell FIle name</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErrorCode" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Error Code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErrorMsg" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>ErrorMsg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" default="1.0"/>
+	</xsd:complexType>
+	<xsd:complexType name="ResponseDataGetGisDataType">
+		<xsd:sequence>
+			<xsd:element name="ReqId" type="xsd:string"/>
+			<xsd:element name="ErrorCode" type="xsd:string"/>
+			<xsd:element name="ErrorMsg" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="BeAlert-1.1-standard" targetNamespace="urn:v1.bealert.services.bgc" xmlns:wstns="urn:v1.bealert.services.bgc" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:stdctx="urn:v4.context.vss.objects.bgc">
+    <wsdl:import namespace="urn:v1.bealert.services.bgc" location="BeAlert-1.1-standard-def.wsdl"/>
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:v1.bealert.services.bgc" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xsd:import namespace="urn:v4.context.vss.objects.bgc" schemaLocation="http://ssr.web.bc/repository/VSS/OBJ/Context/4.0/VSS-OBJ-Context-4.0.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <!-- ================================================== -->
+    <!-- Messages                                           -->
+    <!-- ================================================== -->
+    <wsdl:message name="VSSContextMessage">
+        <wsdl:part name="Context" element="stdctx:Context"/>
+    </wsdl:message>
+    <!-- ================================================== -->
+    <!-- SOAP Binding                                       -->
+    <!-- ================================================== -->
+    <wsdl:binding name="BeAlertSOAPBinding" type="wstns:BeAlertPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetRlts">
+            <soap:operation soapAction="GetRlts" style="document"/>
+            <wsdl:input name="GetRltsInput">
+                <soap:body use="literal"/>
+                <soap:header message="wstns:VSSContextMessage" part="Context" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetRltsOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="TechnicalFault">
+                <soap:fault use="literal" name="TechnicalFault"/>
+            </wsdl:fault>
+            <wsdl:fault name="FunctionalFault">
+                <soap:fault use="literal" name="FunctionalFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetGis">
+            <soap:operation soapAction="GetGis" style="document"/>
+            <wsdl:input name="GetGisInput">
+                <soap:body use="literal"/>
+                <soap:header message="wstns:VSSContextMessage" part="Context" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetGisOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="TechnicalFault">
+                <soap:fault use="literal" name="TechnicalFault"/>
+            </wsdl:fault>
+            <wsdl:fault name="FunctionalFault">
+                <soap:fault use="literal" name="FunctionalFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CheckService">
+            <soap:operation soapAction="CheckService" style="document"/>
+            <wsdl:input name="CheckServiceInput">
+                <soap:body use="literal"/>
+                <soap:header message="wstns:VSSContextMessage" part="Context" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CheckServiceOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="TechnicalFault">
+                <soap:fault use="literal" name="TechnicalFault"/>
+            </wsdl:fault>
+            <wsdl:fault name="FunctionalFault">
+                <soap:fault use="literal" name="FunctionalFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <!-- ================================================== -->
+    <!-- Service                                            -->
+    <!-- ================================================== -->
+    <wsdl:service name="BeAlert-1.1-Service">
+        <wsdl:port binding="wstns:BeAlertSOAPBinding" name="BeAlert-1.1-SOAP-Port">
+            <soap:address location="http://hostname.of.ssg/SSG/services/BelgacomStandardRouter/bgc.services.bealert.v1"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="BeAlert-1.1-standard" targetNamespace="urn:v1.bealert.services.bgc" xmlns:wstns="urn:v1.bealert.services.bgc" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:techerr="urn:v1.technicalerror.vss.objects.bgc" xmlns:funcerr="urn:v1.functionalerror.vss.objects.bgc">
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:v1.bealert.services.bgc" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1">
+            <xsd:import namespace="urn:v1.technicalerror.vss.objects.bgc" schemaLocation="http://ssr.web.bc/repository/VSS/OBJ/TechnicalError/1.0/VSS-OBJ-TechnicalError-1.0.xsd"/>
+            <xsd:import namespace="urn:v1.functionalerror.vss.objects.bgc" schemaLocation="http://ssr.web.bc/repository/VSS/OBJ/FunctionalError/1.0/VSS-OBJ-FunctionalError-1.0.xsd"/>
+            <xsd:include schemaLocation="BeAlert-1.1.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <!-- ================================================== -->
+    <!-- Messages                                           -->
+    <!-- ================================================== -->
+    <!-- CancelPit Message -->
+    <wsdl:message name="GetRltsRequestMessage">
+        <wsdl:part name="GetRltsRequestMessagePart" element="wstns:RequestDataGetRltsData"/>
+    </wsdl:message>
+    <wsdl:message name="GetRltsResponseMessage">
+        <wsdl:part name="GetRltsResponseMessagePart" element="wstns:ResponseDataGetRltsDataDetails"/>
+    </wsdl:message>
+	 <!-- UpdatePit Message -->
+    <wsdl:message name="GetGisRequestMessage">
+        <wsdl:part name="GetGisRequestMessagePart" element="wstns:RequestDataGetGisData"/>
+    </wsdl:message>
+    <wsdl:message name="GetGisResponseMessage">
+        <wsdl:part name="GetGisResponseMessagePart" element="wstns:ResponseDataGetGisDataDetails"/>
+    </wsdl:message>
+    <!-- CheckService Message -->
+    <wsdl:message name="CheckServiceRequestMessage">
+        <wsdl:part name="CheckServiceRequestMessagePart" element="wstns:RequestDataCheckService"/>
+    </wsdl:message>
+    <wsdl:message name="CheckServiceResponseMessage">
+        <wsdl:part name="CheckServiceResponseMessagePart" element="wstns:ResponseDataCheckService"/>
+    </wsdl:message>
+    <wsdl:message name="TechnicalFaultMessage">
+        <wsdl:part name="TechnicalFaultMessagePart" element="techerr:TechnicalError"/>
+    </wsdl:message>
+    <wsdl:message name="FunctionalFaultMessage">
+        <wsdl:part name="FunctionalFaultMessagePart" element="funcerr:FunctionalError"/>
+    </wsdl:message>
+    <!-- ================================================== -->
+    <!-- PortType                                           -->
+    <!-- ================================================== -->
+    <wsdl:portType name="BeAlertPortType">
+        <wsdl:operation name="GetRlts">
+            <wsdl:input name="GetRltsInput" message="wstns:GetRltsRequestMessage"/>
+            <wsdl:output name="GetRltsOutput" message="wstns:GetRltsResponseMessage"/>
+            <wsdl:fault name="TechnicalFault" message="wstns:TechnicalFaultMessage"/>
+            <wsdl:fault name="FunctionalFault" message="wstns:FunctionalFaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetGis">
+            <wsdl:input name="GetGisInput" message="wstns:GetGisRequestMessage"/>
+            <wsdl:output name="GetGisOutput" message="wstns:GetGisResponseMessage"/>
+            <wsdl:fault name="TechnicalFault" message="wstns:TechnicalFaultMessage"/>
+            <wsdl:fault name="FunctionalFault" message="wstns:FunctionalFaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CheckService">
+            <wsdl:input name="CheckServiceInput" message="wstns:CheckServiceRequestMessage"/>
+            <wsdl:output name="CheckServiceOutput" message="wstns:CheckServiceResponseMessage"/>
+            <wsdl:fault name="TechnicalFault" message="wstns:TechnicalFaultMessage"/>
+            <wsdl:fault name="FunctionalFault" message="wstns:FunctionalFaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
