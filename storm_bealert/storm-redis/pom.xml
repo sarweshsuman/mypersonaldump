@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <groupId>osix_analytics</groupId>
+    <version>1.1-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>storm-redis</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-hdfs</artifactId>
+            <version>1.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+			<version>2.8.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.7.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>            
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.9.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.9.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+        </dependency>
+
+  
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-kafka</artifactId>
+ 			<version>0.10.1</version>
+<!--		<scope>system</scope>
+		<systemPath>/home/sarwesh/Downloads/storm-kafka-0.10.1.jar</systemPath>
+		 -->
+	</dependency>
+
+<!--
+        <dependency>
+            <groupId>slf4j-simple-1.7.21</groupId>
+            <artifactId>slf4j-simple-1.7.21</artifactId>
+            <scope>system</scope>
+            <version>1.7.21</version>
+            <systemPath>/home/sarwesh/Downloads/slf4j-simple-1.7.21.jar</systemPath>
+        </dependency>
+        
+         
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.6.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.5</version>
+        </dependency>
+ -->                
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-core</artifactId>
+            <scope>provided</scope>
+            <version>0.10.0</version>	
+        </dependency>
+
+<!-- 
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-kafka</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+ -->
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-redis</artifactId>
+            <version>0.10.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>            
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.10.5</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.6</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>com.yammer.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>2.2.0</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.2</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.6.1</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>2.8.0</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+			<version>2.8.0</version>
+						<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+			
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.3</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+		<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+        </dependency>
+     <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+            			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>	
+			</exclusions>
+            
+      </dependency>		        		
+    </dependencies>
+
+
+
+
+<build>
+<finalName>proximus-storm-redis-${project.version}</finalName>
+<sourceDirectory>src</sourceDirectory>
+<directory>/home/sarwesh/Documents/TESTING_STORM_BEALERT</directory>
+<plugins>
+    <!-- Enable compilation with non-standard (Java 5) compiler -->
+    <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.2</version>
+    </plugin>
+
+    <!--
+        SureFire plugin to generate reports about testing.
+        Exclusion for Pig Tests
+    -->
+    <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.14.1</version>
+    </plugin>
+
+    <!--
+        This plugin is used to have a nice separation between Pig-tests and normal Java-UDF tests.
+        If necessary we can move this plugin into a Maven-profile for separate execution.
+    -->
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.9.1</version>
+        <executions>
+            <execution>
+                <id>add-test-source</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                    <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                    <sources>
+                        <source>src/test/SimpleHBaseLoader</source>
+                    </sources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+
+    <!--
+        Build assembly of our UDF's to distribute on Hadoop
+    -->
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <configuration>
+            <filters>
+                <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                        <exclude>META-INF/*.SF</exclude>
+                        <exclude>META-INF/*.DSA</exclude>
+                        <exclude>META-INF/*.RSA</exclude>
+                    </excludes>
+                </filter>
+            </filters>
+            <createDependencyReducedPom>true</createDependencyReducedPom>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>com.proximus.rtls.redis.stormtopology.main.TopologyMain</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
+</build>
+</project>
