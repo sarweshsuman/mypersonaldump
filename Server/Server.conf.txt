@@ -1,0 +1,14 @@
+<configuration>
+        <server name="CMTU_DASHBOARD_1" port="20000" documentroot="/opt/CMT/CMTU_DASHBOARD/" logging="YES" alive="YES">
+                <index page="/pages/Index.html" format="html" runas="html" />
+                <log path="/opt/CMT/CMTU_DASHBOARD/logs/" level="2" overwrite="NO" removelogsafter="1">
+                </log>
+                <file name="readlog.pl" returntype="Content-type: text/plain" return="YES" command="perl DOCUMENT_ROOT/scripts/readlog.pl" />
+                <filepattern name=".pl" returntype="Content-type: text/plain" invokescript="perl" return="YES" />
+        </server>
+        <server name="Dummy" port="20000" documentroot="/opt/CMT/CMTU_DASHBOARD/" logging="YES">
+                <index page="/pages/Index.html" format="html" runas="html" />
+                <log path="/opt/CMT/CMTU_DASHBOARD/log/" level="2" overwrite="NO" removelogsafter="1">
+                </log>
+        </server>
+</configuration>
