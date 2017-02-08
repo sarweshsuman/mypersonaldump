@@ -1,0 +1,296 @@
+#!/usr/bin/env perl
+
+use strict;
+use Carp;
+
+use Getopt::Long;
+use PMTUtilities qw(partial h2a icdefined getPMTSysConfig loadResource loadClass getSubRefFromName);
+use PMTFlowRepo qw(isFlowRunning getJobDefinitions roleIsEnabled);
+use Data::Dumper;
+
+# Parse the options 
+# I need a flowcd
+#    optionally a flowid if this is a re-run
+
+#$SIG{CHLD} = 'IGNORE';
+
+my $start_ts = time();
+
+my $flowcd;
+my $runid;
+my $role;
+my $debug;
+my $postprocess;
+my $jlogfile;
+my $help;
+$| = 1;
+my $ic;
+my $log_initialized = 0;
+my $exit_status;
+my @cmdlineparams_in = ();
+
+sub errhandler {
+  my $error = shift;
+  if (ref $error eq 'HASH') {
+    print "Error occurred: $error->{'message'}\n";
+  }
+  else {
+    print "Error occurred: $error\n";
+  }
+  exit(1);
+}
+
+# Set the environment
+eval {
+  my $envconfig = getPMTSysConfig(section=>'env');
+  if ($envconfig) {
+    for my $key (keys %$envconfig) {
+      #print STDERR "Setting environment $key to $envconfig->{$key}\n";
+      $ENV{$key} = $envconfig->{$key};
+    }
+  }
+};
+if ($@) {
+  print STDERR "Failed to initialize PMTRunner in setting up environment. Exiting\n";
+  exit(1);
+}
+
+my $usage =<<ENDOFUSAGE;
+Usage: $0 --role role --flowcd flowcd [--runid runid ] [--help]
+ENDOFUSAGE
+
+GetOptions('runid=s'=>\$runid,
+           'role=s'=>\$role,
+           'help'=>\$help,
+           'debug'=>\$debug,
+           'postprocess=s'=>\$postprocess,
+           'jlogfile=s'=>\$jlogfile,
+					 'param=s@'=>\@cmdlineparams_in,
+           'flowcd=s'=>\$flowcd);
+
+if ($help) {
+  print "$usage\n";
+  exit(0);
+}
+
+if ($debug) {
+  $debug = 1;
+}
+else {
+  $debug = 0;
+}
+
+if (not defined $role or not defined $flowcd) {
+  die "Invalid parameters:
+    $usage\n";
+}
+
+if (not defined $runid) {
+	$runid = isFlowRunning(flowcd=>$flowcd);
+  if (not $runid) {
+    print "Flow $flowcd is not registered yet. Please run PMTRegister first\n";
+    exit(1);
+  }
+}
+else {
+  my $lrunid = isFlowRunning(flowcd=>$flowcd);
+  if ($lrunid == $runid) {
+  	#print "Running runid specified on command line: $runid\n";
+  }
+  else {
+    print "Runid $runid is not a valid runid\n";
+    exit(1);
+  }
+}
+
+
+# Check if this role does exist in current config
+my $isenabled;
+eval {
+  $isenabled = roleIsEnabled(flowcd=>$flowcd,role=>$role);
+};
+if ($@) {
+  if (ref $@ eq 'HASH') {
+    print "Error occurred: $@->{'message'}\n";
+  }
+  else {
+    print "Error occurred: $@\n";
+  }
+  exit(1);
+}
+if (not $isenabled) {
+  print "Role $role is not enabled in flow $flowcd\n";
+  exit(1);
+}
+
+####
+
+
+use PMTExecContext;
+
+$ic = new PMTExecContext();
+# Set some initial variables
+
+$ic->{'SYSTEM/RUN/FLOWCD'} = $flowcd;
+$ic->{'SYSTEM/RUN/ROLE'} = $role;
+$ic->{'SYSTEM/RUN/RUNID'} = $runid;
+$ic->{'SYSTEM/RUN/RUNSEQ'} = time();
+$ic->{'SYSTEM/RUN/EXITCODE'} = 1;
+
+my $cmdlineparams = {}; 
+for my $kv (@cmdlineparams_in) {
+  my ($k,$v) = split(/=/,$kv);
+  $cmdlineparams->{$k}=$v;
+}
+
+for my $k (keys %$cmdlineparams) {
+  $ic->{"CMDPARAM/$k"} = $cmdlineparams->{$k};
+}
+
+
+my $conf_files = [ "$ENV{'PMTROOT'}/etc/pmt.conf","$ENV{'PMTROOT'}/etc/${flowcd}.conf" ];
+
+use Data::Dumper;
+eval {
+	$ic->addPlugin(name=>"ENV",module=>'PMTENVInterceptor');
+	$ic->addPlugin(name=>"CONFIG",module=>'PMTConfigInterceptor',initparams=>{config_file=>$conf_files});
+	$ic->addPlugin(name=>"JOBDEF",module=>'PMTXPathInterceptor', initparams=>{name=>'JOBDEF',mountpoint=>'JOBDEF',mode=>'JOBDEF'});
+	$ic->addPlugin(name=>"JLOG",module=>'PMTXPathInterceptor', initparams=>{debug=>$debug,name=>'JLOG',mountpoint=>'JLOG',mode=>'JLOG'});
+  $ic->addPlugin(name=>'MDB',module=>"PMTMonitoringHelper");
+	$ic->addPlugin(name=>"LOG",module=>'PMTLogHelper');
+	$ic->addPlugin(name=>'CALL',module=>'PMTCallInterceptor');
+	$ic->startInterceptors();
+};
+if ($@) {
+  print STDERR "ERROR: Error while initializing plugins",Dumper($@),"\n";
+  print STDERR "Goodbye cruel world\n";
+  exit 1;
+}
+
+### 
+use Data::Dumper;
+# Now start the logger
+my $logger = $ic->getNamedHelper(name=>'LOG');
+eval {
+  $logger->startHelper();
+};
+if ($@) {
+  print STDERR "ERROR: Logger initialize failed: ",Dumper($@),"\n";
+  print STDERR "Goodbye cruel world\n";
+  exit(1);
+}
+
+$ic->MDBStartJob();
+
+$ic->log(message=>"Running PMTRunner for flowcd $flowcd and role $role",domain=>"system",level=>"info");
+$ic->log(message=>"Setting initial settings in initialcontext:",data=>$ic->getRawHash(),domain=>"system",level=>"info");
+
+if ($cmdlineparams) {
+  $ic->log(message=>"Using commandline parameters", data=>$cmdlineparams,domain=>"system",level=>"info");
+}
+
+my $jd = $ic->dumpJOBDEF();
+$ic->log(message=>"Using jobdefinition:",data=>$jd,domain=>"system",level=>"info");
+
+$ic->{'SYSTEM/SETTINGS/XML/AUTO_EXPAND'} = 0;
+
+# search if we have settings ?
+my $has_settings = 0;
+my $logsettings = {}; # a quick and dirty hash, just for logging purposes
+if (icdefined $ic->{'JOBDEF/role/settings/param'}) {
+  $has_settings = 1;
+  my $settings;
+  use Data::Dumper;
+  eval {
+    $settings = $ic->{'JOBDEF/role/settings/parseParamset()'};
+  };
+  if ($@) { 
+    my $e = @_;
+    $ic->log(message=>"Error occurred during parsing of settings",data=>$e,level=>"error",domain=>"system");
+    $ic->{'SYSTEM/RUN/EXITCODE'} = 1;
+    $ic->MDBEndJob();
+    exit(1); 
+  }
+  for my $s (keys %$settings) {
+    $logsettings->{$s} = $settings->{$s};
+    $ic->{$s} = $settings->{$s};
+  }
+}
+else {
+  #print STDERR "This role appears not to have settings\n";
+}
+
+if ($has_settings) {
+  $ic->log(message=>"Using settings from role: ",data=>$logsettings,domain=>"system",level=>"info");
+}
+else {
+  $ic->log(message=>"This role does not appear to have special settings",domain=>"system",level=>"info");
+}
+
+$ic->{'SYSTEM/SETTINGS/XML/AUTO_EXPAND'} = 1;
+
+my $driver;
+my $end_ts;
+eval{
+  $driver = $ic->{'JOBDEF/role/job/driver/factory()'};
+  my $rdriver = ref $driver;
+  $ic->log(message=>"Using an $rdriver job driver",level=>"info",domain=>"system");
+
+  $driver->run();
+};
+if ($@) {
+  my $e = @_;
+  $end_ts = time();
+  $ic->log(message=>"An error occurred while creating/running driver",data=>$e,level=>"error",domain=>"system");
+  my $jl = $ic->dumpJLOG();
+  $ic->log(message=>"JLOG is:",data=>$jl,level=>"info",domain=>"system");
+  if (defined $jlogfile) {
+    my $jlf;
+    eval {
+      open ($jlf,">",$jlogfile);
+      print $jlf "$jl\n";
+      close ($jlf);
+    };
+    if ($@) {
+      $ic->log(message=>"Failed to write JLOG to file $jlogfile",domain=>"system",level=>"error");
+    }
+  }
+  if (defined $driver) { undef $driver; }
+  $ic->{'SYSTEM/RUN/EXITCODE'} = 1;
+  $ic->MDBEndJob();
+  exit(1);
+}
+else {
+  $end_ts = time();
+  my $elapsed_time = $end_ts - $start_ts;
+  $ic->log(message=>"Job appears to have completed fine, total run time = $elapsed_time seconds",domain=>"system",level=>"info");
+  my $jl = $ic->dumpJLOG();
+  $ic->log(message=>"JLOG is:",data=>$jl,level=>"info",domain=>"system");
+  if (defined $jlogfile) {
+    my $jlf;
+    eval {
+      open ($jlf,">",$jlogfile);
+      print $jlf "$jl\n";
+      close ($jlf);
+    };
+    if ($@) {
+      $ic->log(message=>"Failed to write JLOG to file $jlogfile",domain=>"system",level=>"error");
+    }
+  }
+  undef $driver;
+  $ic->MDBEndJob();
+}
+
+if (defined $postprocess) {
+  #print "Postprocess is defined: $postprocess\n";
+  eval {
+    my $rc = `$postprocess`;
+    #print "result of running $postprocess: $rc\n";
+  };
+  if ($@) {
+    #print "Error invoking script: $postprocess: $@\n";
+  }
+}
+else {
+  #print "Postprocess is defined: $postprocess\n";
+}

@@ -1,0 +1,1016 @@
+#!/usr/bin/env perl
+
+#################################################################################
+#
+#
+#
+#
+#
+#
+#  File Header should go here
+#
+#
+#
+#
+#
+#
+#
+#
+#################################################################################
+
+#################################################################################
+# Package LogRedirector
+# The purpose of this small package is simply to provide the API for the logger,
+# This logger will simply redirect calls to the logger to the master
+#################################################################################
+
+package LogRedirector;
+
+use strict;
+use Carp;
+use overload;
+
+use PMTUtilities qw(h2a);
+
+use PMTHelperBase;
+our @ISA = qw(PMTHelperBase);
+
+sub new {
+  my $package = shift;
+  my %args = @_;
+
+  my $o = {};
+  $o->{'initialcontext'} = $args{'initialcontext'};
+  $o->{'controller'} = $args{'controller'};
+  return bless $o;
+}
+
+sub log { 
+  my $self = shift;
+  my $controller = $self->{'controller'};
+  my %args = @_;
+
+        #   use Data::Dumper;
+        #   print STDERR "Attempting to log ",Dumper(\%args),"\n";
+        #   my $dupargs = {};
+        #   for my $k (keys %args) {
+        #     my $v = $args{$k};
+        #     my $nv;
+        #     if ($v) {
+        #       eval {
+        #         if ($args{'data'}) {
+        #           print STDERR "Attempting to log an object $args{'data'}", ref $args{'data'},"\n";
+        #         }
+        #         if (ref $v and defined overload::Method ($v,q(""))) {
+        #           $nv = "$v";
+        #         }
+        #         elsif (ref $v and $v->can('toString')) {
+        #           $nv = $v->toString(1);
+        #         }
+        #         else { 
+        #           $nv = $v;
+        #         }
+        #       };
+        #     }
+        #     if ($nv) { $v = $nv; }
+        #     $dupargs->{$k} = $v;
+        #   }
+        #   my @params = h2a(hash=>$dupargs);
+        #   #$controller->log(@params);
+
+  eval {
+    $controller->log(@_);
+  };
+  if ($@) {
+    my $e = $@;
+    print STDERR "Error occurred while attempting to log ",Dumper(\%args), "\nError = ",Dumper($e),"\n";
+  }
+}
+
+1;
+
+#################################################################################
+# Package Controller
+# The controller acts mostly as a a hook to attach all kinds of stuff to
+# Somewhat of a kludge ...
+#################################################################################
+
+package Controller;
+
+select STDERR;
+$|=1;
+
+use strict;
+use Carp;
+use PMTUtilities qw(partial);
+use threads;
+use threads::shared;
+use Time::HiRes qw(time);
+
+sub stderrprint {
+  stderrprint(@_);
+}
+
+sub new {
+  my $class = shift;
+  my $name = shift;
+  my $queue = shift;
+  my $helper_queue = shift;
+  my $params = shift;
+  my $mqueue = shift;
+  my $locks = shift;
+  my $o = {};
+  $o->{'controller_name'} = $name;
+  $o->{'methods'} = {};
+  $o->{'channel'} = {};
+  $o->{'threads'} = {};
+  $o->{'queue'} = $queue;
+  $o->{'mqueue'} = $mqueue;
+  $o->{'params'} = $params;
+  $o->{'mqueue'} = $mqueue;
+  $o->{'locks'} = $locks;
+  $o->{'initialcontext'} = undef;
+  return bless $o;
+}
+
+sub setChannel {
+  my $self = shift;
+  my $channel = shift;
+  $self->{'channel'} = $channel;
+}
+
+sub can {
+  my $self = shift;
+  my $method = shift;
+  if (defined \&$method) { 
+    return \&$method; 
+  }
+  return $self->{'methods'}->{$method};
+}
+
+sub process_setup {
+  my $self = shift;
+  my %args = @_;
+  my $directives = $args{'directives'};
+  my $data = $args{'data'};
+  $self->send(type=>'ack',data=>{});
+  $self->{'queue'}->enqueue({data=>$data,directives=>$directives});
+
+}
+
+# these should not now about XML I think
+sub sendGeneric {
+  my $self = shift;
+  
+  my %args = @_;
+  my %ic = $self->{'initialcontext'};
+  my $data = $args{'data'};
+  my $ldirectives = {
+    mtime=>time()
+  };
+  if (defined $self->{'initialcontext'}) {
+    my $ic = $self->{'initialcontext'};
+    my $context = {};
+    use PMTUtilities qw(icdefined);
+    if (icdefined $ic->{'WORKLIST/ITEM'}) { $context->{'item'} = $ic->{'WORKLIST/ITEM'};}
+    if (icdefined $ic->{'RUNTIME/EXEC/GROUP'}) { $context->{'group'} = $ic->{'RUNTIME/EXEC/GROUP'};}
+    if (icdefined $ic->{'RUNTIME/EXEC/STEP'}) { $context->{'step'} = $ic->{'RUNTIME/EXEC/STEP'};}
+    $ldirectives->{'context'} = $context;
+  }
+  $ldirectives->{'env'} = { process_id=>$$,hostname=>'somehostname'};
+  my $type = $args{'type'};
+  $self->send(type=>$type,directives=>$ldirectives,data=>$data);
+}
+sub sendEvent {
+  my $self = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  my $fdata = { data=>$data};
+  $self->sendGeneric(type=>'event',data=>$data);
+}
+sub sendStatusUpdate { 
+  my $self = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  $self->sendGeneric(type=>'status_update',data=>$data);
+}
+
+sub sendProcessingStatistics { 
+  my $self = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  $self->sendGeneric(type=>'processing_statistics',data=>$data);
+}
+sub sendDataSummary { 
+  my $self = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  $self->sendGeneric(type=>'data_summary',data=>$data);
+}
+
+sub sendLog {
+  my $self = shift;
+  my %args = @_;
+  use Data::Dumper;
+  $self->sendGeneric(type=>"log",data=>\%args);
+}
+
+sub log {
+  my $self = shift;
+  my %args = @_;
+  use Data::Dumper;
+  my $dupargs = {};
+  for my $k (keys %args) {
+    my $v = $args{$k};
+    my $nv;
+    if ($v) {
+      eval {
+        if ($args{'data'}) {
+          #print STDERR "Attempting to log an object $args{'data'}", ref $args{'data'},"\n";
+        }
+        if (ref $v and defined overload::Method ($v,q(""))) {
+          $nv = "$v";
+        }
+        elsif (ref $v and $v->can('toString')) {
+          $nv = $v->toString(1);
+        }
+        else { 
+          $nv = $v;
+        }
+      };
+    }
+    if ($nv) { $v = $nv; }
+    $dupargs->{$k} = $v;
+  }
+  use PMTUtilities qw(h2a);
+  my @params = h2a(hash=>$dupargs);
+  #$controller->log(@params);
+  eval {
+    $self->sendLog(@params);
+  };
+  if ($@) {
+    my $e = $@;
+    print STDERR "Error occurred while attempting to log ",Dumper(\%args), "\nError = ",Dumper($e),"\n";
+  }
+  return;
+}
+
+
+sub setMessageHandler {
+  my $controller = shift; 
+  my $name = shift;
+  my $callable = shift;
+  my %args = @_;
+  my $instance_method = $args{'instance_method'};
+  my $mimic_instance_method = $args{'mimic_instance_method'};
+  
+  if ($instance_method) {
+    $controller->{'methods'}->{$name} = partial($callable,$controller);
+    #stderrprint("controller methods name $name set to $controller->{'methods'}->{$name}\n");
+  }
+  elsif ($mimic_instance_method) {
+    #stderrprint("Mimicking instance method\n");
+    my $to_add = partial (sub {
+       my $self = shift; my $orig_callable = partial(shift);
+       $orig_callable->(@_);
+    },$controller,$callable);
+    $controller->{'methods'}->{$name} = $to_add;
+  }
+  else {
+    $controller->{'methods'}->{$name} = partial($callable);
+  }
+  if ($args{'init'}) {
+    my $i = partial($args{'init'});
+    $i->();
+  }
+}
+
+sub setHandler {
+  my $controller = shift;
+  # Implementation wise, setMessageHandler and setHandler do the same thing,
+  # but it may be, semantically a little less confusing for whomever uses these
+  # if we make a distinction
+
+  return $controller->setMessageHandler(@_);
+}
+
+sub run {
+  my $self = shift;
+
+  my $start_index = 0;
+  my $do_continue = 1;
+  while ($do_continue) {
+    sleep 10;
+    $do_continue = 0;
+  }
+  $self->terminate();
+}
+
+sub terminate {
+  my $self = shift;
+  for my $k (keys %{$self->{'methods'}}) { delete $self->{'methods'}->{$k}; }
+}
+
+sub AUTOLOAD {
+  ## dynamic delegation ... 
+  my $self = shift;
+  my $ic = $self->{'initialcontext'};
+  our $AUTOLOAD;
+  my $method = (split(/::/,$AUTOLOAD))[1];
+  #stderrprint("Looking for method $method\n");
+
+  if (defined $self->{'methods'}->{$method}) {
+    return $self->{'methods'}->{$method}->(@_);
+  }
+  else {
+    my $n = $self->{'controller_name'};
+    eval {
+      $self->log(message=>"Method $method not found in controller for $n",domain=>"system",level=>"error");
+    };
+    if ($@) {
+      # logging not setup yet maybe ?
+      stderrprint("ERROR: Method $method not found in controller for $n\n");
+    }
+  }
+  
+  #return &$self('AUTOLOADER',$method,@_);
+}
+
+sub DESTROY {
+  my $self = shift;
+  # Nothing much needs to happen here ... I think but 
+  #print STDERR "In destructor of controller $self->{'controller_name'}\n";
+  #stderrprint("In destructor of controller $self->{'controller_name'}\n");
+  #my $lth = $self->{'threads'}->{'listener'};
+  #my $rth = $self->{'threads'}->{'runner'};
+  #if (defined $lth) { $lth->join(); delete $self->{'threads'}->{'listener'} }
+  #if (defined $rth) { $rth->join(); delete $self->{'threads'}->{'runner'} }
+}
+
+1;
+
+#################################################################################
+# Package Controller
+# The controller acts mostly as a a hook to attach all kinds of stuff to
+# Somewhat of a kludge ...
+#################################################################################
+
+package Runner ;
+
+# Set autoflush on STDERR
+select STDERR; 
+$|=1;
+
+use strict;
+use threads;
+use threads::shared;
+use Thread::Queue;
+use PMTIOSem;
+my $channel_lock :shared ;
+my $queue_lock :shared ;
+my $prequeue_lock: shared ;
+my $process_lock :shared ;
+
+my $queue :shared = Thread::Queue->new();
+my $helper_queue :shared = Thread::Queue->new();
+my @mqueue :shared;
+
+use Data::Dumper;
+
+sub stderrprint {
+  print STDERR @_;
+}
+
+sub channel_unlocker {
+  my $controller = shift;
+  my $p = $controller->{'params'};
+  lock $p;
+  $p->{'channel_locked'} = 0;
+}
+
+sub channel_locker {
+  my $controller = shift;
+  my $p = $controller->{'params'};
+  $controller->send(type=>'channel_locked');
+  $p->{'channel_locked'} = 1;
+}
+
+sub do_service_end {
+  my $controller = shift;
+  my %args = @_;
+  my $d = $args{'directives'};
+  #stderrprint("Service end is called\n");
+  $controller->{'queue'}->enqueue({data=>{},directives=>$d});
+  $controller->{'do_continue'} = 0;
+  $controller->send(type=>'end_ack');
+}
+sub do_service_request {
+  my $controller = shift;
+  my %args = @_;
+  my $directives = $args{'directives'};
+  my $data = $args{'data'};
+  $controller->send(type=>'service_request_accept',data=>{request_id=>$data->{'request_id'}});
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+}
+
+sub initial_process_setup {
+  my $controller = shift;
+  my %args = @_;
+  my $directives = $args{'directives'};
+  my $data = $args{'data'};
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+}
+
+sub do_process_mqueue {
+  my $controller = shift;
+  my $mq = $controller->{'mqueue'};
+  lock $mq;
+  my $msize = scalar @$mq;
+  $controller->send(type=>'mqueue_size_response',data=>{size=>$msize});
+  while (scalar @$mq) {
+    my $m = shift @$mq;
+    use JSON;
+    my $parsed = from_json($m);
+    $controller->send(directives=>$parsed->{'directives'},data=>$parsed->{'data'});
+  }
+  $controller->send(type=>'end_mqueue');
+}
+
+sub do_item_end {
+  my $controller = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  my $directives = $args{'directives'};
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+  #$controller->send(type=>'ask_work');
+}
+sub do_new_item {
+  my $controller = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  my $directives = $args{'directives'};
+  #stderrprint("Got new item message\n");
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+}
+
+sub do_wait_work {
+  my $controller = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  my $directives = $args{'directives'};
+  
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+}
+
+sub do_process_ic_setup {
+  my $controller = shift;
+  my %args = @_;
+  my $directives = $args{'directives'};
+  my $data = $args{'data'};
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+  $controller->send(type=>'ic_setup_ack');
+}
+
+sub do_process_ic_update {
+  my $controller = shift;
+  my %args = @_;
+  my $directives = $args{'directives'};
+  my $data = $args{'data'};
+  $controller->{'queue'}->enqueue({data=>$data,directives=>$directives});
+  # Sending the ack should actually be done when the update is actually done but for now we actually do it here...
+  $controller->send(type=>'ic_update_ack');
+}
+  
+sub do_helper_start {
+  my $controller = shift;
+  $controller->send(type=>'ask_work');
+}
+
+sub do_configure {
+  my $controller = shift;
+  my $params = shift;
+  my %args = @_;
+  my $data = $args{'data'};
+  for my $k (keys %$data) {
+    $params->{$k} = $data->{$k};
+  }
+}
+
+# This process will run 2 threads
+# A listener thread, listening for messages from the master process, and a runner thread, doing the actual work
+# The listener thread will typically throw "stuff on a quuee, a queue that is listened on by the runner thread
+
+sub listener_thread { 
+  use IO::Handle;
+  use PMTUtilities qw(partial icdefined deserializeFrom serializeTo);
+  use PMTExecContext;
+  use IO::Socket::INET;
+
+  my $queue = shift; 
+  my $helper_queue = shift;
+  my $params = shift;
+  #stderrprint("Set lock on process lock in listener\n");
+
+  my $ihandle = IO::Handle->new()->fdopen(fileno(STDIN),"r");
+  my $ohandle = IO::Handle->new()->fdopen(fileno(STDOUT),"w");
+  my ($directives,$message) = deserializeFrom(io=>$ihandle);
+
+  my $sock;
+  my $do_continue = 1;
+
+  if ($message->{'request'} and $message->{'request'} eq 'handshake') {
+    $sock = IO::Socket::INET->new(Listen    => 1,
+                                  LocalAddr => 'localhost',
+                                  Proto     => 'tcp');
+
+    my $port = $sock->sockport();
+    my $host = $sock->sockhost();
+    my $handshake = { port=>"$port",host=>$host };
+    serializeTo(type=>"handshake_response",data=>{response=>{handshake=>$handshake}},io=>$ohandle);
+  }
+  else {
+    serializeTo(type=>"handshake_response",error=>1,status=>0,data=>{response=>{error=>'invalid request'}},io=>$ohandle);
+    $do_continue = 0;
+  }
+
+  my $client_sock = $sock->accept();
+  $client_sock->blocking();
+
+  my $socksem = new PMTIOSem($client_sock,master=>1);
+
+  my $controller;
+
+  $params->{'socket_fileno'} = $client_sock->fileno();
+
+  if ($do_continue) {
+    my $controller = new Controller('listener',$queue,$helper_queue, $params,\@mqueue,[$channel_lock, $queue_lock,$prequeue_lock, $process_lock ])  ;
+    $controller->setChannel($client_sock);
+    my $reader_handlers = {process_setup=>partial($controller->can('process_setup'),$controller),
+                           lock_channel=>partial(\&channel_locker,$controller),
+                           unlock_channel=>partial(\&channel_unlocker,$controller),
+                           initial_process_setup=>partial(\&initial_process_setup,$controller),
+                           service_request=>partial(\&do_service_request,$controller),
+                           service_end=>partial(\&do_service_end,$controller),
+                           ic_update=>partial(\&do_process_ic_update,$controller),
+                           ic_setup=>partial(\&do_process_ic_setup,$controller),
+                           configure=>partial(\&do_configure,$controller,$params),
+                           wait_work=>partial(\&do_wait_work,$controller),
+                           item_end=>partial(\&do_item_end,$controller),
+                           new_item=>partial(\&do_new_item,$controller),
+                           process_mqueue=>partial(\&do_process_mqueue,$controller),
+                           helper_start=>partial(\&do_helper_start,$controller),
+                           final_exit=>partial(sub { use threads; my $c = shift; print STDERR "$$ Doing final exit in listener thread: ",threads->tid(),"\n";$c->{'do_continue'} = 0; undef; },$controller),
+                           end=>partial(\&do_service_request,$controller,end=>1)
+                          };
+
+    my $cr = partial(\&deserializeFrom,
+                     io=>$client_sock,
+                     receiver_id=>__PACKAGE__."::listener_thread",
+                     handlers=>$reader_handlers,
+                     _lockvar_=>[$channel_lock],
+                     __controller__=>$controller
+                    );
+    my $cw = partial(\&serializeTo,
+                     writer_id=>__PACKAGE__."::listener_thread",
+                     io=>$client_sock,
+                     reader=>$cr,
+                     locker=>$socksem,
+                     __controller__=>$controller,
+                     channellock_checker=>partial(sub { my $p = shift; if ($p->{'channel_locked'}) { return 1; } else { return 0; }},$params),
+                     message_queue=>\@mqueue
+                    );
+    $controller->setMessageHandler('send',$cw);
+    $controller->setMessageHandler('receive',$cr);
+    $controller->setHandler('doContinue',
+                             sub { my $c = shift; return $c->{'do_continue'};},
+                             instance_method=>1,
+                             init=>partial(sub { my $controller = shift, $controller->{'do_continue'} = 1; }, $controller)
+                           );
+
+    # Now that everything is setup and configured and looks right
+    # stderrprint("Initial Process setup in process lock\n");
+    $process_lock = 1; 
+    cond_signal($process_lock);
+
+
+    while ($controller->doContinue()) {
+      #stderrprint("Waiting for a message is listener thread\n");
+      eval {
+        $controller->receive(); undef;
+      };
+      if ($@) {
+        use Data::Dumper;
+        stderrprint("$$ An error occurred while receiving message in listener thread in PMTHelper:",Dumper($@),"\n");
+        $controller->{'do_continue'} = 0;
+        $controller->{'queue'}->enqueue({data=>{},directives=>{type=>'service_end'}});
+        sleep 1;
+        
+      }
+       
+      #stderrprint("Got a message in listener thread\n");
+    }
+    #stderrprint("The listener thread can safely go away now\n");
+  }
+  else {
+    # We set the process lock to -1, which will be interpreted later, to determine that the runner thread should not start
+    $process_lock = -1;
+    cond_signal($process_lock);
+  }
+
+  #stderrprint("listener thread quits\n");
+  return;
+
+}
+
+sub runner_thread { 
+  use IO::Handle;
+  use IO::Socket;
+  use PMTUtilities qw(partial expand loadClass h2a);
+  use PMTExecContext;
+  my $queue = shift;
+  my $helper_queue = shift;
+  my $params = shift;
+
+
+  # #############################################################################################
+  # Setup of the runner thread
+  # #############################################################################################
+
+  my $socket_fileno = $params->{'socket_fileno'};
+  #my $iohandle = IO::Handle->new()->fdopen($socket_fileno,'r+');
+  my $iohandle;
+  eval { $iohandle = IO::Socket->new_from_fd($socket_fileno,'r+'); };
+  if ($@) {
+    stderrprint("ERROR: FAILED TO CREATED A SOCKET FROM FILENO: $@\n" ); return;
+    # TOFIX: I should send a message through the STDOUT, to notify the master
+  }
+
+  my @statrs = $iohandle->stat();
+  my $socksem = new PMTIOSem($iohandle);
+
+  my $ic = new PMTExecContext();
+
+  my $controller = new Controller('runner',$queue,$helper_queue,$params,\@mqueue,[$channel_lock, $queue_lock,$prequeue_lock, $process_lock ])  ;
+  $ic->{'RUNTIME/SYSTEM/CONTROLLER'} = $controller;
+  $controller->{'initialcontext'} = $ic;
+  my $logger = new LogRedirector(initialcontext=>$ic,controller=>$controller);
+
+  $ic->addPlugin(name=>"LOG",plugin=>$logger,verbose=>1);
+
+  my $reader_handlers = {};
+  my $cr = partial(\&deserializeFrom,receiver_id=>__PACKAGE__ ."::runner_thread",io=>$iohandle,handlers=>$reader_handlers,_lockvar_=>[$channel_lock],__controller__=>$controller);
+  my $cw = partial(\&serializeTo,
+                   io=>$iohandle,
+                   reader=>$cr,
+                   writer_id=>__PACKAGE__."::runner_thread",
+                   locker=>$socksem,
+                   __controller__=>$controller,
+                   channellock_checker=>partial(sub { my $p = shift; if ($p->{'channel_locked'}) { return 1; } else { return 0; }},$params),
+                   message_queue=>\@mqueue
+                  );
+
+  $controller->setMessageHandler('send',$cw);
+  $controller->setMessageHandler('receive',$cr);
+
+  my $c = 0;
+  my $do_continue = 1;
+
+  my $callable = {};
+  my $shared_callable = {};
+  my $current_ic_levelnumber = $ic->getNumberOfLevels();
+
+  # #############################################################################################
+  # Start running in the runner thread
+  # The runner thread "listens" on a queue, containing work items
+  # So the runner thread picks items from the queue, analyzes what it gets and decides
+  # what to do
+  # Items on the queue are actually the items sent to the PMTPLHelper by the master process
+  # Those items therefore have the same structure, a directives and a data part
+  # what needs to be done is in {directives}->{type}, more information can be found in the data
+  # #############################################################################################
+
+  eval {
+    while ($do_continue) {
+
+      $controller->log(message=>"Waiting for queue item in run thread", level=>"trace",domain=>"system");
+
+      my $qi = $controller->{'queue'}->dequeue_timed(2,1);
+
+      if ($qi) {
+
+        if ($qi->{'directives'}->{'type'} eq 'process_setup') { 
+          # setup of all objects that are, well that's the purpose of this block, will be shared among
+          # all items
+
+          my $event_data = {
+            event_type=>'object_creation',
+            detail=>{}
+          };
+          my $d = $qi->{'data'};
+
+          #$controller->log(message=>"I should be doing process setup for the following items",data=>$qi->{'data'},domain=>"system",level=>"debug");
+
+          for my $o (@$d) {
+            my $ob;
+            my $oname;
+            eval {
+               my $ox = $ic->xnode(data=>$o);
+
+               $event_data->{'detail'}->{'object_ref'} = $ox->xnodePath();
+               $oname = $ox->xfind(q{./@name});
+               $event_data->{'detail'}->{'object_name'} = $oname;
+
+               $controller->log(message=>"Creating object $oname with xnode",data=>"$ox",domain=>"system",level=>"debug");
+               
+               $ob = $ic->xfactory(data=>$o);
+               my $lifecycle = $ox->xfind(data=>'./@lifecycle',default=>'shared'); $lifecycle = lc $lifecycle;
+               if ($lifecycle eq 'item') {
+                  $callable->{uc $oname} = $ob;
+               }
+               else {
+                  # by default it is assumed shared, is this a good idea ?
+                  $shared_callable->{uc $oname} = $ob;
+               }
+            };
+            if ($@) { 
+              my $e = $@;
+              $event_data->{'status'} = 'fail'; 
+              $controller->log(message=>"Error occurred during process setup for ",data=>{data=>$d,error=>$e},level=>"ERROR",domain=>"system" );
+              
+              # we don't reraise here since we need to do some processing, well sending messages that is, below
+            }
+            else { 
+              $event_data->{'status'} = 'success'; 
+              $controller->log(message=>"Object $oname created allright",level=>"debug",domain=>"system");
+            }
+            $controller->sendEvent(data=>$event_data);
+          }
+          $controller->send(type=>'process_setup_ack');
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'initial_process_setup') { 
+          my $event_data = {
+            event_type=>'object_creation',
+            detail=>{}
+          };
+          my $d = $qi->{'data'};
+          use Data::Dumper;
+          eval {
+            $controller->log(message=>"I should be doing initial process setup for following items",data=>$qi->{'data'},domain=>"system",level=>"debug");
+          };
+          if ($@) {
+            print STDERR "Something went really bad when sending log data to master",Dumper($@),"\n";
+          }
+          my $errorcount = 0;
+          for my $o (@$d) {
+            my $ob;
+            my $oname;
+            eval {
+               my $ox = $ic->xnode(data=>$o);
+               $event_data->{'detail'}->{'object_ref'} = $ox->xnodePath();
+               $oname = $ox->xfind(q{./@name});
+               $event_data->{'detail'}->{'object_name'} = $oname;
+               
+               $controller->log(message=>"Creating an object name $oname with xnode",data=>"$ox",domain=>"system",level=>"debug");
+
+               $ob = $ic->xfactory(data=>$o);
+
+               my $lifecycle = $ox->xfind(data=>'./@lifecycle',default=>'shared'); $lifecycle = lc $lifecycle;
+
+               if ($lifecycle eq 'item') {
+                  $controller->log(message=>"Created a non shareable object $oname",level=>"debug",domain=>"system");
+                  $callable->{uc $oname} = $ob;
+               }
+               else {
+                  $controller->log(message=>"Created a shareable object $oname",level=>"debug",domain=>"system");
+                  # by default it is assumed shared, is this a good idea ?
+                  $shared_callable->{uc $oname} = $ob;
+               }
+            };
+            if ($@) { 
+              my $e = $@;
+              $event_data->{'status'} = 'fail'; 
+              $controller->log(message=>"Error occurred during process_setup for item $oname",level=>"error",domain=>"system",data=>$e);
+              $errorcount =  $errorcount + 1;
+            }
+            else { 
+              $event_data->{'status'} = 'success'; 
+              #print STDERR "created an object allright:",$ob,"\n"; 
+            }
+            $controller->sendEvent(data=>$event_data);
+          }
+          $controller->send(type=>'ask_work',data=>{response=>'initial_process_setup',errorcount=>$errorcount});
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'wait_work') {
+          # This happens when the master processes does not have anything to process for the time being
+          # In order to guarantee asyncronous processing, it needs a little help from the helper
+          # With this request the master asks the helper to come back in a couple o' seconds
+          sleep 2;
+          $controller->send(type=>'ask_work');
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'ic_update') {
+          #stderrprint("Doing IC update with data ",Dumper($qi->{'data'}));
+          # New data to be merged into the local $ic
+          if (defined $qi->{'data'}->{'set'}) {
+            my $setdata = $qi->{'data'}->{'set'};
+            use PMTUtilities qw(mergeRecursiveHash);
+            mergeRecursiveHash(src=>$setdata,update=>$ic);
+          }
+          if (defined $qi->{'data'}->{'delete'}) {
+            #stderrprint("TODO: Deletes in update not supported yet ... I always wondered whether we will ever need it though ...\n");
+          }
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'ic_setup') {
+          # ic setup, all that is supported here, and prolly all that is needed, is loading of plugins
+          my $setupdata = $qi->{'data'};
+          use PMTUtilities qw(h2a);
+          if (defined $setupdata->{'plugins'}) {
+            for my $p (@{$setupdata->{'plugins'}}) {
+              #$controller->log(message=>"In PMTPLHelper, creating plugin $p->{'name'}, module $p->{'module'}" ,domain=>"system",level=>"info");
+              my @a = h2a(hash=>$p);
+              $ic->addPlugin(@a);
+            }
+          }
+          $ic->startInterceptors();
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'service_request' and $qi->{'data'}->{'data'}->{'request'} ne '__end__') { 
+          # a plain service_request ...
+          my $stepstart_time = time();
+          my $request_id = $qi->{'data'}->{'request_id'};
+          my $r = $qi->{'data'}->{'data'}->{'request'}; 
+          if (uc $r eq 'STEP') {
+            my $node_url = $qi->{'data'}->{'data'}->{'data'}->{'stepnode'};
+            my $xnode = $ic->resolve($node_url);
+            my $stepname = $xnode->xfind('./@name/data()',default=>'UNKNOWN');
+            $controller->log(message=>"Runner thread got a STEP service request, stepname $stepname",domain=>"system",level=>"debug",data=>$node_url);
+            $ic->{'RUNTIME/EXEC/STEP'} = $stepname;
+            my $event_data = {
+              event_type=>'step_start',
+              detail=>{}
+            };
+            $controller->sendGeneric(type=>'event',data=>$event_data);
+            # I should now look for call
+            if ($xnode->exists('./call')) {
+              my $pa = [];
+              my $object_name = $xnode->xfind('./call/@object_name');
+              $controller->log(message=>"Call-request working on object name $object_name",domain=>"system",level=>"trace");
+              if (defined $callable->{uc $object_name} or defined $shared_callable->{uc $object_name}) {
+                if ($xnode->exists('./call/params')) {
+                  my $lp = $xnode->xfind('./call/params');
+                  use PMTUtilities qw(h2a);
+                  $pa = h2a(hash=>$lp);
+                }
+                my $the_actual_callable;
+                if ($xnode->exists('./call/method')) {
+                  # it is a method call
+                  use PMTUtilities qw(partial);
+                  if (defined $callable->{uc $object_name}) {
+                    $the_actual_callable = partial($callable->{uc $object_name}->can($xnode->xfind('./call/method/data(.)')),$callable->{uc $object_name});
+                  }
+                  else {
+                    $the_actual_callable = partial($shared_callable->{uc $object_name}->can($xnode->xfind('./call/method/data(.)')),$shared_callable->{uc $object_name});
+                  }
+                }
+                else {
+                  if (defined $callable->{uc $object_name}) {
+                    $the_actual_callable = $callable->{uc $object_name}; 
+                  }
+                  else {
+                    $the_actual_callable = $shared_callable->{uc $object_name}; 
+                  }
+                }
+                my $calling_context = $xnode->xfind('/call/calling_context/data()',default=>'VOID');
+
+                # we're good to go, let's run this baby ...
+                eval {
+                  $the_actual_callable->(@$pa);
+                };
+                if ($@) { 
+                  my $e = $@;
+                  #$controller->log(message=>"An error occurred during the execution of the step",data=>$e,level=>"error",domain=>"system");
+                  my $event_data = {
+                    event_type=>'step_end',
+                    detail=>{
+                      status=>'fail',
+                      error_data=>$e
+                    }
+                  };
+                  $controller->sendGeneric(type=>'event',data=>$event_data);
+                  my $response_data = { response_data=>$event_data->{'detail'}};
+                  $controller->send(type=>'step_end',data=>{status=>'fail',step=>$stepname});
+                }
+                else { 
+                  $controller->log(message=>"Actual execution of the step went fine",domain=>"system",level=>"info");
+                  my $event_data = {
+                    event_type=>'step_end',
+                    detail=>{status=>'success'}
+                  };
+                  $controller->sendGeneric(type=>'event',data=>$event_data);
+                  my $response_data = { response_data=>$event_data->{'detail'}};
+                  $controller->send(type=>'step_end',data=>{status=>'success',step=>$stepname});
+                }
+              }
+              else {
+                $controller->log(message=>"Looking for object $object_name but it does not exist",domain=>"system",level=>"error");
+                my $event_data = {
+                  event_type=>'step_end',
+                  detail=>{status=>'fail'}
+                };
+                $controller->sendGeneric(type=>'event',data=>$event_data);
+                $controller->send(type=>'step_end',data=>{status=>'fail',step=>$stepname});
+              }
+            }
+          }
+          else {
+            $controller->log(message=>"Unsupported request, for the time being only STEP requests are supported", domain=>"system",level=>"error",data=>{received_request=>$qi});
+          }
+          $controller->send(type=>'service_request_status',data=>{request_id=>$request_id,status=>'RUNNING'});
+        } 
+        elsif ($qi->{'directives'}->{'type'} eq 'item_end' ) {
+          # This the signal for the end of an item, do some cleanup
+          $controller->sendGeneric(type=>'event',data=>{event_type=>'item_end'});
+          my $ciclvls = $ic->getNumberOfLevels();
+          while ($ciclvls > $current_ic_levelnumber) {
+            $ic->popParameterStack();
+            $ciclvls = $ic->getNumberOfLevels();
+          }
+          $controller->send(type=>'ask_work');
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'new_item' ) {
+           # This the signal for the start of a new item, do some setup
+           $controller->sendGeneric(type=>'event',data=>{event_type=>'new_item',detail=>{item=>$qi->{'data'}->{'item'}}});
+           # clean all the callables ... 
+           for my $k (keys %$callable) {
+             delete $callable->{$k};
+           }
+           $current_ic_levelnumber = $ic->getNumberOfLevels();
+           $ic->addParameterStack();
+        }
+        elsif ($qi->{'directives'}->{'type'} eq 'service_end') { 
+          # signal that this runner thread can end, in other words, the end of the PMTPLHelper
+          $do_continue = 0; 
+        }
+        else {
+          #stderrprint("Got an unknown request: ",Dumper($qi),"\n");
+        }
+      } # end of if ($qi)
+      else {
+        # Nothing was on the queue ... could we do something else here ...
+      }
+    } # end of # while ($do_continue loop
+  }; # end of eval; 
+  if ($@) {
+    stderrprint("Unforeseen error occurred in run_thread: ",Dumper($@),"\n");
+  }
+  stderrprint("run_thread quits\n");
+}
+
+
+#######################################################################################################
+# Now that everything is defined, all subroutines have been implemented, let's get started, ... at last
+#######################################################################################################
+
+use Getopt::Long;
+
+my $ident;
+my $serr;
+
+GetOptions('serr=s'=>\$serr,
+           'ident=s'=>\$ident);
+
+if ($serr) {
+  open STDERR, ">",$serr;
+}
+
+my @queue :shared = ();
+my %params :shared = ();
+
+lock($process_lock); # A lock allowing the listener thread to startup properly
+                     # It will be released by the listener when it i (the listener) is ready
+                     # The value of the lock also signals whether everything is OK
+                     # a value > 0 => everything is OK
+                     # a value < 0 => something bad happened, runner thread does not even have to start
+
+print STDERR "Booting the helper $$\n";
+my $lthr = threads->create(\&listener_thread, $queue,$helper_queue,\%params);
+# Now wait till lthe listener thread releases the process lock
+cond_wait($process_lock);
+
+my $rthr;
+if ($process_lock > 0) {
+  $rthr = threads->create(\&runner_thread  ,$queue, $helper_queue, \%params);
+}
+else {
+  stderrprint("It looks like we don't even have to wait ...\n");
+}
+
+# And wait ... and wait ... and wait ...
+#stderrprint("Waiting for listener thread\n");
+if ($lthr)   { $lthr->join(); }
+stderrprint("Listener thread is joined/finished in $$\n");
+
+if ($rthr)   { $rthr->join(); }
+stderrprint("runner thread is joined/finished in $$\n");
+
+exit;
+
+1;
