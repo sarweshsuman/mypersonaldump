@@ -1,0 +1,13 @@
+when there is a malformed xml input - the file is skipped but it does not show error in jlog!
+
+ORacle - pmtdb meeting.
+
+view creation - with and without forignen key.
+
+
+evert - meeting 27th 
+
+ic =new PMTExecContext();
+$ic->addPlugins -- this is what does all the work
+
+

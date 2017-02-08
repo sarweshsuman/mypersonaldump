@@ -1,0 +1,1260 @@
+el1961.bc:pmta:/opt/PMT/work/in/MGW> ls -lrt | wc -l
+75350
+el1961.bc:pmta:/opt/PMT/work/in/MGW> dbxml
+
+dbxml>
+
+dbxml>
+
+dbxml> exit
+el1961.bc:pmta:/opt/PMT/work/in/MGW> pdbxml
+\/opt/PMT/bin/pdbxml: line 3: exec: rlwrap: not found
+el1961.bc:pmta:/opt/PMT/work/in/MGW> dbxml
+
+dbxml> help
+
+Command Summary
+---------------
+
+#                 - Comment. Does nothing
+abort             - Aborts the current transaction
+addAlias          - Add an alias to the default container
+addIndex          - Add an index to the default container
+commit            - Commits the current transaction, and starts a new one
+compactContainer  - Compact a container to shrink it's size
+contextQuery      - Execute query expression using the last results as the context item
+cquery            - Execute an expression in the context of the default container
+createContainer   - Creates a new container, which becomes the default container
+debug             - Debug the given query expression, or the default pre-parsed query
+debugOptimization - Debug optimization command -- internal use only
+delIndex          - Delete an index from the default container
+echo              - Echo to output
+getDocuments      - Gets document(s) by name from default container
+getMetaData       - Get a metadata item from the named document
+help              - Print help information.  Use 'help commandName' for extended help
+info              - Get info on default container
+listIndexes       - List all indexes in the default container
+lookupEdgeIndex   - Performs an edge index lookup in the default container
+lookupIndex       - Performs an index lookup in the default container
+lookupStats       - Look up index statistics on the default container
+openContainer     - Opens a container, and uses it as the default container
+preload           - Pre-loads (opens) a container
+prepare           - Prepare the given query expression as the default pre-parsed query
+print             - Prints most recent results, optionally to a file
+putDocument       - Insert a document into the default container
+query             - Execute the given query expression, or the default pre-parsed query
+queryPlan         - Prints the query plan for the specified query expression
+quit              - Exit the program
+reindexContainer  - Reindex a container, optionally changing index type
+removeAlias       - Remove an alias from the default container
+removeContainer   - Removes a container
+removeDocument    - Remove a document from the default container
+run               - Runs the given file as a script
+setAutoIndexing   - Set auto-indexing state of the default container
+setBaseUri        - Set/get the base uri in the default context
+setIgnore         - Tell the shell to ignore script errors
+setLazy           - Sets lazy evaluation on or off in the default context
+setMetaData       - Set a metadata item on the named document
+setNamespace      - Create a prefix->namespace binding in the default context
+setProjection     - Enables or disables the use of the document projection optimization
+setQueryTimeout   - Set a query timeout in seconds in the default context
+setReturnType     - Sets the return type on the default context
+setTypedVariable  - Set a variable to the specified type in the default context
+setVariable       - Set a variable in the default context
+setVerbose        - Set the verbosity of this shell
+sync              - Sync current container to disk
+time              - Wrap a command in a wall-clock timer
+transaction       - Create a transaction for all subsequent operations to use
+upgradeContainer  - Upgrade a container to the current container format
+
+dbxml> exit
+el1961.bc:pmta:/opt/PMT/work/in/MGW> cd ..
+el1961.bc:pmta:/opt/PMT/work/in> cd ..
+el1961.bc:pmta:/opt/PMT/work> cd ..
+el1961.bc:pmta:/opt/PMT> cd var
+el1961.bc:pmta:/opt/PMT/var> ls
+db
+el1961.bc:pmta:/opt/PMT/var> cd *
+el1961.bc:pmta:/opt/PMT/var/db> ls
+__db.001  __db.002  __db.003  __db.004  __db.005  __db.006  DB_CONFIG  log.0000000657  pmt_config.dbxml  pmt_log.dbxml  pmt_oconfig.dbxml
+el1961.bc:pmta:/opt/PMT/var/db> ls -rlt
+total 37820
+-rw-r----- 1 pmta pmta   311296 Feb 12 11:02 pmt_oconfig.dbxml
+-rw-r--r-- 1 pmta pmta       74 Feb 23 22:05 DB_CONFIG
+-rw-r----- 1 pmta pmta   434176 Mar  3 01:44 pmt_config.dbxml
+-rw-r----- 1 pmta pmta  4587520 Mar  3 01:44 pmt_log.dbxml
+-rw-r----- 1 pmta pmta    24576 Mar  5 16:24 __db.001
+-rw-r----- 1 pmta pmta    49152 Mar  5 16:24 __db.006
+-rw-r----- 1 pmta pmta 10485760 Mar  5 16:24 log.0000000657
+-rw-r----- 1 pmta pmta  2080768 Mar  5 16:24 __db.004
+-rw-r----- 1 pmta pmta  7823360 Mar  5 16:24 __db.005
+-rw-r----- 1 pmta pmta  6381568 Mar  5 16:24 __db.003
+-rw-r----- 1 pmta pmta  6545408 Mar  5 16:24 __db.002
+el1961.bc:pmta:/opt/PMT/var/db> cp pmt_config.dbxml pmt_config.dbxml_bkp.20140305
+el1961.bc:pmta:/opt/PMT/var/db> cd ..
+el1961.bc:pmta:/opt/PMT/var> cd ..
+el1961.bc:pmta:/opt/PMT> dbxml
+
+dbxml> help
+
+Command Summary
+---------------
+
+#                 - Comment. Does nothing
+abort             - Aborts the current transaction
+addAlias          - Add an alias to the default container
+addIndex          - Add an index to the default container
+commit            - Commits the current transaction, and starts a new one
+compactContainer  - Compact a container to shrink it's size
+contextQuery      - Execute query expression using the last results as the context item
+cquery            - Execute an expression in the context of the default container
+createContainer   - Creates a new container, which becomes the default container
+debug             - Debug the given query expression, or the default pre-parsed query
+debugOptimization - Debug optimization command -- internal use only
+delIndex          - Delete an index from the default container
+echo              - Echo to output
+getDocuments      - Gets document(s) by name from default container
+getMetaData       - Get a metadata item from the named document
+help              - Print help information.  Use 'help commandName' for extended help
+info              - Get info on default container
+listIndexes       - List all indexes in the default container
+lookupEdgeIndex   - Performs an edge index lookup in the default container
+lookupIndex       - Performs an index lookup in the default container
+lookupStats       - Look up index statistics on the default container
+openContainer     - Opens a container, and uses it as the default container
+preload           - Pre-loads (opens) a container
+prepare           - Prepare the given query expression as the default pre-parsed query
+print             - Prints most recent results, optionally to a file
+putDocument       - Insert a document into the default container
+query             - Execute the given query expression, or the default pre-parsed query
+queryPlan         - Prints the query plan for the specified query expression
+quit              - Exit the program
+reindexContainer  - Reindex a container, optionally changing index type
+removeAlias       - Remove an alias from the default container
+removeContainer   - Removes a container
+removeDocument    - Remove a document from the default container
+run               - Runs the given file as a script
+setAutoIndexing   - Set auto-indexing state of the default container
+setBaseUri        - Set/get the base uri in the default context
+setIgnore         - Tell the shell to ignore script errors
+setLazy           - Sets lazy evaluation on or off in the default context
+setMetaData       - Set a metadata item on the named document
+setNamespace      - Create a prefix->namespace binding in the default context
+setProjection     - Enables or disables the use of the document projection optimization
+setQueryTimeout   - Set a query timeout in seconds in the default context
+setReturnType     - Sets the return type on the default context
+setTypedVariable  - Set a variable to the specified type in the default context
+setVariable       - Set a variable in the default context
+setVerbose        - Set the verbosity of this shell
+sync              - Sync current container to disk
+time              - Wrap a command in a wall-clock timer
+transaction       - Create a transaction for all subsequent operations to use
+upgradeContainer  - Upgrade a container to the current container format
+
+dbxml> openContainer pmt_config.dbxml
+stdin:2: openContainer failed, Error: pmt_config.dbxml: container file not found, or not a container
+
+dbxml> pmt_config.dbxml^C
+
+dbxml> exit
+el1961.bc:pmta:/opt/PMT> dbxml -h var/db/^C
+el1961.bc:pmta:/opt/PMT> help dbxml
+-bash: help: no help topics match `dbxml'.  Try `help help' or `man -k dbxml' or `info dbxml'.
+el1961.bc:pmta:/opt/PMT> dbxml -h var/db/pmt_config.dbxml
+
+dbxml>
+
+dbxml> info
+Version: Oracle: Berkeley DB XML 2.5.16: (December 22, 2009)
+         Berkeley DB 4.8.30: (April  9, 2010)
+No default container
+Shell and XmlManager state:
+        Not transactional
+        Verbose: on
+        Query context state: LiveValues,Eager
+
+dbxml> info dbxml
+Version: Oracle: Berkeley DB XML 2.5.16: (December 22, 2009)
+         Berkeley DB 4.8.30: (April  9, 2010)
+No default container
+Shell and XmlManager state:
+        Not transactional
+        Verbose: on
+        Query context state: LiveValues,Eager
+
+dbxml> openContainer pmt_config.dbxml
+stdin:4: openContainer failed, Error: Not a directory
+
+dbxml> showContainer
+stdin:5: showContainer failed, Unknown command
+
+dbxml> query collection()//*[contains(text(),'work')]
+stdin:6: query failed, Error: The default collection has not been set [err:FODC0002]
+
+dbxml> exit
+el1961.bc:pmta:/opt/PMT> pdbxml
+/opt/PMT/bin/pdbxml: line 3: exec: rlwrap: not found
+el1961.bc:pmta:/opt/PMT> dbxml^C
+el1961.bc:pmta:/opt/PMT> which dbxml
+/opt/PMT/bin/dbxml
+el1961.bc:pmta:/opt/PMT> vi /opt/PMT/bin/dbxml
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT> dbxml -h /opt/PMT/var/db/
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml> query collection()//*[contains(text(),'work')]
+0 objects returned for eager expression 'collection()//*[contains(text(),'work')]'
+
+
+dbxml>  query collection()//resource[@name="db_lookup_dn"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]'
+
+
+dbxml> print
+<resource name="db_lookup_dn" resource_type="db_lookup_resource"><db_connection_ref name="pmt"><param name="shared_connection" data_type="bool">Y</param><param name="connection_name">pmt</param></db_connection_ref><resource_definition dataclass="paramset"><param name="id_generator_type">db_sequence</param><param name="id_generator_dialect">oracle</param><param name="id_generator_name">seq_pmt_dn_id</param><param name="key_col">dn</param><param name="id_col">id</param><param name="auto_insert" value_type="bool">1</param><param name="target_table">t_pmt_dn</param></resource_definition></resource>
+
+dbxml>  query collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_pmt_dn_id</param>
+
+dbxml> help
+
+Command Summary
+---------------
+
+#                 - Comment. Does nothing
+abort             - Aborts the current transaction
+addAlias          - Add an alias to the default container
+addIndex          - Add an index to the default container
+commit            - Commits the current transaction, and starts a new one
+compactContainer  - Compact a container to shrink it's size
+contextQuery      - Execute query expression using the last results as the context item
+cquery            - Execute an expression in the context of the default container
+createContainer   - Creates a new container, which becomes the default container
+debug             - Debug the given query expression, or the default pre-parsed query
+debugOptimization - Debug optimization command -- internal use only
+delIndex          - Delete an index from the default container
+echo              - Echo to output
+getDocuments      - Gets document(s) by name from default container
+getMetaData       - Get a metadata item from the named document
+help              - Print help information.  Use 'help commandName' for extended help
+info              - Get info on default container
+listIndexes       - List all indexes in the default container
+lookupEdgeIndex   - Performs an edge index lookup in the default container
+lookupIndex       - Performs an index lookup in the default container
+lookupStats       - Look up index statistics on the default container
+openContainer     - Opens a container, and uses it as the default container
+preload           - Pre-loads (opens) a container
+prepare           - Prepare the given query expression as the default pre-parsed query
+print             - Prints most recent results, optionally to a file
+putDocument       - Insert a document into the default container
+query             - Execute the given query expression, or the default pre-parsed query
+queryPlan         - Prints the query plan for the specified query expression
+quit              - Exit the program
+reindexContainer  - Reindex a container, optionally changing index type
+removeAlias       - Remove an alias from the default container
+removeContainer   - Removes a container
+removeDocument    - Remove a document from the default container
+run               - Runs the given file as a script
+setAutoIndexing   - Set auto-indexing state of the default container
+setBaseUri        - Set/get the base uri in the default context
+setIgnore         - Tell the shell to ignore script errors
+setLazy           - Sets lazy evaluation on or off in the default context
+setMetaData       - Set a metadata item on the named document
+setNamespace      - Create a prefix->namespace binding in the default context
+setProjection     - Enables or disables the use of the document projection optimization
+setQueryTimeout   - Set a query timeout in seconds in the default context
+setReturnType     - Sets the return type on the default context
+setTypedVariable  - Set a variable to the specified type in the default context
+setVariable       - Set a variable in the default context
+setVerbose        - Set the verbosity of this shell
+sync              - Sync current container to disk
+time              - Wrap a command in a wall-clock timer
+transaction       - Create a transaction for all subsequent operations to use
+upgradeContainer  - Upgrade a container to the current container format
+
+dbxml> query collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml>
+
+dbxml>
+
+dbxml> print
+<param name="id_generator_name">seq_pmt_dn_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_dn_id'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_dn_id''
+
+
+dbxml> query collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_dn_id</param>
+
+dbxml> query collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_pmt_dn</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"] with 't_mgw_dn'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"] with 't_mgw_dn''
+
+
+dbxml> query collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_mgw_dn</param>
+
+dbxml>
+
+dbxml>
+
+dbxml> query {replace value of node collection()//resource[@name="query {replace value of node collection()//resource[@name="^C
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_measid_id'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_measid_id''
+
+
+dbxml> print collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"]
+
+dbxml> query collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_measid_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="target_table"] with 't_mgw_measid'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="target_table"] with 't_mgw_measid''
+
+
+dbxml> print ^C
+
+dbxml> query  collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="target_table"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_mgw_measid</param>
+
+dbxml> query  collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_measid_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_measkey_id'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_measkey_id''
+
+
+dbxml> print ^C
+
+dbxml> query collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_measkey_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="target_table"] with 't_mgw_measkey'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="target_table"] with 't_mgw_measkey''
+
+
+dbxml> print ^C
+
+dbxml> query  collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="target_table"]\
+^C
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_mgw_measkey</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_meastype_id'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_meastype_id''
+
+
+dbxml> query collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_meastype_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"] with '
+^C
+^C
+'t_^C
+
+#
+'}
+/
+exit
+^C
+^Z
+[1]+  Stopped                 dbxml -h /opt/PMT/var/db/
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT>
+el1961.bc:pmta:/opt/PMT> dbxml -h /opt/PMT/var/db/
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml> query collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_meastype_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"] with 't_mgw_meastype'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"] with 't_mgw_meastype''
+
+
+dbxml> query  collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_mgw_meastype</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_pmttargetkey_id'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_mgw_pmttargetkey_id''
+
+
+dbxml> query collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="id_generator_name"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="id_generator_name"]'
+
+
+dbxml> print
+<param name="id_generator_name">seq_mgw_pmttargetkey_id</param>
+
+dbxml> query {replace value of node collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="target_table"] with 't_mgw_pmttargetkey'}
+0 objects returned for eager expression 'replace value of node collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="target_table"] with 't_mgw_pmttargetkey''
+
+
+dbxml> print ^C
+
+dbxml> query collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="target_table"]
+1 objects returned for eager expression 'collection()//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="target_table"]'
+
+
+dbxml> print
+<param name="target_table">t_mgw_pmttargetkey</param>
+
+
+
+dbxml> query {replace value of attribute collection()/flow_definitions/flow[@name="MGW"] with 'MGW_PM'}
+stdin:32: query failed, Error: syntax error, unexpected attribute, expecting node [err:XPST0003], <query>:1:27
+replace value of attribute collection()/flow_definitions/flow[@name="MGW"] with 'MGW_PM'
+                          ^
+
+dbxml> query { replace value of  collection()/flow_definitions/flow[@name="MGW"]/@name with  'MGW_PM'}^C hkjkh
+stdin:33: hkjkh failed, Unknown command
+
+dbxml>  query { replace value of node  collection()/flow_definitions/flow[@name="MGW"]/@name with  'MGW_PM'}
+0 objects returned for eager expression ' replace value of node  collection()/flow_definitions/flow[@name="MGW"]/@name with  'MGW_PM''
+
+
+dbxml> query  collection()/flow_definitions/flow/@name/data(.)
+1 objects returned for eager expression 'collection()/flow_definitions/flow/@name/data(.)'
+
+
+dbxml> print
+MGW_PM
+
+
+
+
+el1960.bc:pmtd:/opt/PMT/pmtsys/scripts> dbxml
+
+dbxml> el1960.bc:pmtd:/opt/PMT/pmtsys/scripts> dbxml -h /opt/PMT/var/db
+Joined existing environment
+
+dbxml> openContainer pmt_log.dbxml
+
+dbxml> query collection()/status/flow
+51 objects returned for eager expression 'collection()/status/flow'
+
+
+dbxml> query { delete node collection()/status/flow[@name="MGW"] }
+0 objects returned for eager expression ' delete node collection()/status/flow[@name="MGW"] '
+
+
+dbxml> query collection()/*/name(.)
+3 objects returned for eager expression 'collection()/*/name(.)'
+
+
+dbxml> print
+status
+run_id
+logs
+
+dbxml> query { delete node collection()/logs//flow[@name="MGW"] }
+0 objects returned for eager expression ' delete node collection()/logs//flow[@name="MGW"] '
+
+
+
+
+****************** CREATE NEW STREAM BY COPYING ANOTHER STREAM ******************************************
+
+
+el1960.bc:pmtd:/opt/PMT/etc> dbxml -h /opt/PMT/var/db/
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml>
+
+dbxml> query { insert node collection()//flow_definitions/flow[@name="MGW_PM"] into collection()//flow_definitions }
+0 objects returned for eager expression ' insert node collection()//flow_definitions/flow[@name="MGW_PM"] into collection()//flow_definitions '
+
+
+dbxml> query { replace value of node collection()//flow[@name="MGW_PM"][2]/@name to 'MSS_PM' }
+stdin:4: query failed, Error: syntax error, unexpected <end of file>, expecting with [err:XPST0003], <query>:1:80
+ replace value of node collection()//flow[@name="MGW_PM"][2]/@name to 'MSS_PM'
+                                                                               ^
+
+dbxml>  query { replace value of node collection()//flow[@name="MGW_PM"][2]/@name with 'MSS_PM' }
+0 objects returned for eager expression ' replace value of node collection()//flow[@name="MGW_PM"][2]/@name with 'MSS_PM' '
+
+
+dbxml> query collection()//flow/@name/data(.)
+2 objects returned for eager expression 'collection()//flow/@name/data(.)'
+
+
+dbxml> print
+MGW_PM
+MSS_PM
+
+No need to make changes in pmt_log.dbxml because PMTRegister would register it.
+
+
+# change collection details and parse_load details
+
+
+dbxml> query collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class
+1 objects returned for eager expression 'collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class'
+
+
+dbxml> print
+<class>AppModules::SaxHandler_MGWPMT01D</class>
+
+dbxml> query { replace value of node collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class with '<class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class with '<class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}''
+
+
+dbxml> query collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class
+1 objects returned for eager expression 'collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class'
+
+
+dbxml> print
+<class>&lt;class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}</class>
+
+dbxml> query { replace value of node collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class with 'AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class with 'AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}''
+
+
+dbxml> query collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class
+1 objects returned for eager expression 'collection()//flow[@name="MSS_PM"]//role[@name="parse_load"]//config/saxhandler/class'
+
+
+dbxml> print
+<class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}</class>
+
+
+query {replace value of node collection()/shared//resource[@name="db_lookup_dn"]/resource_definition/param[@name="id_generator_name"] with 'seq_{{SYSTEM/RUN/FLOWCD}}_dn_id'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_measid"]/resource_definition/param[@name="id_generator_name"] with 'seq_{{SYSTEM/RUN/FLOWCD}}_measid_id'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_{{SYSTEM/RUN/FLOWCD}}_measkey_id'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="id_generator_name"] with 'seq_{{SYSTEM/RUN/FLOWCD}}_meastype_id'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="id_generator_name"] with 'seq_{{SYSTEM/RUN/FLOWCD}}_pmttargetkey_id'}
+
+
+query {replace value of node collection()/shared//resource[@name="db_lookup_dn"]/resource_definition/param[@name="target_table"] with 't_{{SYSTEM/RUN/FLOWCD}}_dn'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_measid"]/resource_definition/param[@name="target_table"] with 't_{{SYSTEM/RUN/FLOWCD}}_measid'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_measkey"]/resource_definition/param[@name="target_table"] with 't_{{SYSTEM/RUN/FLOWCD}}_measkey'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_meastype"]/resource_definition/param[@name="target_table"] with 't_{{SYSTEM/RUN/FLOWCD}}_meastype'}
+query {replace value of node collection()/shared//resource[@name="db_lookup_targetkey"]/resource_definition/param[@name="target_table"] with 't_{{SYSTEM/RUN/FLOWCD}}_pmttargetkey'}
+
+
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//role[@name='parse_load']//group[@name='parse']
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//role[@name='parse_load']//group[@name='parse']'
+
+
+dbxml> print
+<group name="parse"><pre_reqs/><loopdriver empty_policy="undef">{!RUNTIME/RESOURCES/INFILE_ITERATOR!}</loopdriver><setup><ic_update dataclass="paramset"/></setup><config dataclass="paramset"><param name="parallellism">multiprocessing</param><param name="helper" data_type="xnode"><class>PMTHelperHelper</class><initparams dataclass="paramset"><param name="resultcollector">{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</param><param name="helperscript">PMTPLHelper</param></initparams></param><param name="subprocesses">{{SYSTEM/SETTINGS/CONCURRENCY/PARSE}}</param></config><process_model><objects><object name="parsexml" data_type="xnode" lifecycle="shared"><pre_reqs/><class>ExpatXSParser</class><config data_type="xnode"><saxhandler data_type="xnode"><class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}</class></saxhandler><io><in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params></in><out><class>PMTSimpleWriter</class><params><directory auto_create="yes">{{SYSTEM/PARAM/ORA_DATAFILE_DIR}}</directory><outfile>{{WORKLIST/ITEM|basename| regReplace xml$ {{_NOW_|formatDateTime %Y%m%d%H%M%S}}.dat}}</outfile><reset_on_init data_type="bool">Y</reset_on_init><mode>file</mode><result_label>oracle_data_file</result_label></params></out></io><gather_statistics data_type="bool">Y</gather_statistics><gather_data_summary data_type="bool">Y</gather_data_summary><get_results_during_run data_type="bool">Y</get_results_during_run></config></object><object name="commonsteps" data_type="xnode" lifecycle="shared"><pre_reqs/><class>PMTCommonSteps</class></object></objects><steps><step name="init" seq="1"><pre_reqs/><call object_name="parsexml"><method>initialize</method><params dataclass="paramset"/></call></step><step name="parse" seq="2"><pre_reqs><wait/></pre_reqs><call object_name="parsexml"><method>run</method><params dataclass="paramset"/><calling_context>scalar</calling_context></call></step><step name="appendresult" target="local" seq="3"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>append</method><params dataclass="paramset"><param name="item">{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//result/oracle_data_file|default FAILEDRES}}</param></params></call></step>
+<step name="archivefile" seq="4"><pre_reqs/>
+<call object_name="commonsteps"><method>moveFile</method><params dataclass="paramset"><param name="file">{{WORKLIST/ITEM}}</param><param name="directory">{{SYSTEM/PARAM/ARCHIVE_DIR}}</param></params></call></step></steps></process_model><end><steps><step name="end_ora_filescollector" seq="1"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>end</method></call></step></steps></end></group>
+
+dbxml>
+
+dbxml>
+
+dbxml> query { d^C
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>1</evalvalue></create_condition><wait><or><evalvalue>{{SYSTEM/RUN/ROLE|lc|eq load}}</evalvalue><evalvalue>{{SYSTEM/GROUPS/LOAD/WAIT/PARSE|default 1|evalBoolean|not}}</evalvalue><evalvalue>{{JLOG///group[@name="parse"]/status/end|default 0|evalBoolean}}</evalvalue></or></wait></pre_reqs>
+
+dbxml> query { delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs}
+0 objects returned for eager expression ' delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs'
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs
+0 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/pre_reqs'
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver'
+
+
+dbxml> print
+<loopdriver empty_policy="empty_token">{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</loopdriver>
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/loopdriver
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/loopdriver'
+
+
+dbxml> print
+<loopdriver empty_policy="undef">{!RUNTIME/RESOURCES/INFILE_ITERATOR!}</loopdriver>
+
+dbxml> query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver with collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/loopdriver}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver with collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/loopdriver'
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='load']/loopdriver'
+
+
+dbxml> print
+<loopdriver empty_policy="empty_token">{!RUNTIME/RESOURCES/INFILE_ITERATOR!}</loopdriver>
+
+dbxml>  query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']'
+
+
+dbxml> print
+<group name="parse"><pre_reqs/><loopdriver empty_policy="undef">{!RUNTIME/RESOURCES/INFILE_ITERATOR!}</loopdriver><setup><ic_update dataclass="paramset"/></setup><config dataclass="paramset"><param name="parallellism">multiprocessing</param><param name="helper" data_type="xnode"><class>PMTHelperHelper</class><initparams dataclass="paramset"><param name="resultcollector">{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</param><param name="helperscript">PMTPLHelper</param></initparams></param><param name="subprocesses">{{SYSTEM/SETTINGS/CONCURRENCY/PARSE}}</param></config><process_model><objects><object name="parsexml" data_type="xnode" lifecycle="shared"><pre_reqs/><class>ExpatXSParser</class><config data_type="xnode"><saxhandler data_type="xnode"><class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}</class></saxhandler><io><in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params></in><out><class>PMTSimpleWriter</class><params><directory auto_create="yes">{{SYSTEM/PARAM/ORA_DATAFILE_DIR}}</directory><outfile>{{WORKLIST/ITEM|basename| regReplace xml$ {{_NOW_|formatDateTime %Y%m%d%H%M%S}}.dat}}</outfile><reset_on_init data_type="bool">Y</reset_on_init><mode>file</mode><result_label>oracle_data_file</result_label></params></out></io><gather_statistics data_type="bool">Y</gather_statistics><gather_data_summary data_type="bool">Y</gather_data_summary><get_results_during_run data_type="bool">Y</get_results_during_run></config></object><object name="commonsteps" data_type="xnode" lifecycle="shared"><pre_reqs/><class>PMTCommonSteps</class></object></objects><steps><step name="init" seq="1"><pre_reqs/><call object_name="parsexml"><method>initialize</method><params dataclass="paramset"/></call></step><step name="parse" seq="2"><pre_reqs><wait/></pre_reqs><call object_name="parsexml"><method>run</method><params dataclass="paramset"/><calling_context>scalar</calling_context></call></step><step name="appendresult" target="local" seq="3"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>append</method><params dataclass="paramset"><param name="item">{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//result/oracle_data_file|default FAILEDRES}}</param></params></call></step><step name="archivefile" seq="4"><pre_reqs/><call object_name="commonsteps"><method>moveFile</method><params dataclass="paramset"><param name="file">{{WORKLIST/ITEM}}</param><param name="directory">{{SYSTEM/PARAM/ARCHIVE_DIR}}</param></params></call></step></steps></process_model><end><steps><step name="end_ora_filescollector" seq="1"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>end</method></call></step></steps></end></group>
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs/>
+
+dbxml> query { insert into query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition><evalvalue>0</evalvalue></create_condition>'}
+stdin:22: query failed, Error: syntax error, unexpected into, expecting <end of file> [err:XPST0003], <query>:1:13
+ insert into query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition><evalvalue>0</evalvalue></create_condition>'
+            ^
+
+dbxml> query { insert  query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs^C
+
+dbxml> query { insert '<create_condition><evalvalue>0</evalvalue></create_condition>' into  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs}
+stdin:24: query failed, Error: syntax error, unexpected "'...'", expecting <end of file> [err:XPST0003], <query>:1:72
+ insert '<create_condition><evalvalue>0</evalvalue></create_condition>' into  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+                                                                       ^
+
+dbxml> query { insert node '<create_condition><evalvalue>0</evalvalue></create_condition>' into  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs}
+0 objects returned for eager expression ' insert node '<create_condition><evalvalue>0</evalvalue></create_condition>' into  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition>&lt;evalvalue>0&lt;/evalvalue>&lt;/create_condition></pre_reqs>
+
+dbxml> query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition><evalvalue>0</evalvalue></create_condition>'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition><evalvalue>0</evalvalue></create_condition>''
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition>&lt;evalvalue>0&lt;/evalvalue>&lt;/create_condition></pre_reqs>
+
+dbxml> query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition>'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition>''
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition></pre_reqs>
+
+dbxml> query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '\<create_condition>'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition>''
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition></pre_reqs>
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs^C
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition></pre_reqs>
+
+dbxml> query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with 'collect'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with 'collect''
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>collect</pre_reqs>
+
+dbxml>  query { replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition></create_condition>'}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs with '<create_condition></create_condition>''
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs>&lt;create_condition>&lt;/create_condition></pre_reqs>
+
+dbxml> query { delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs}
+0 objects returned for eager expression ' delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+0 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+
+dbxml> query { insert value '<pre_reqs><create_condition></create_condition></pre_reqs>' into collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']}
+stdin:49: query failed, Error: syntax error, unexpected value, expecting <end of file> [err:XPST0003], <query>:1:14
+ insert value '<pre_reqs><create_condition></create_condition></pre_reqs>' into collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']
+             ^
+
+dbxml> query collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>0</evalvalue></create_condition><wait><or><evalvalue>{{SYSTEM/RUN/ROLE|lc|eq load}}</evalvalue><evalvalue>{{SYSTEM/GROUPS/LOAD/WAIT/PARSE|default 1|evalBoolean|not}}</evalvalue><evalvalue>{{JLOG///group[@name="parse"]/status/end|default 0|evalBoolean}}</evalvalue></or></wait></pre_reqs>
+
+dbxml> ]/pre_reqs
+stdin:52: ]/pre_reqs failed, Unknown command
+
+dbxml> query collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs/create_condition
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs/create_condition'
+
+
+dbxml> preint
+stdin:54: preint failed, Unknown command
+
+dbxml> print
+<create_condition><evalvalue>0</evalvalue></create_condition>
+
+dbxml> query { insert node collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs into query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']}
+stdin:56: query failed, Error: syntax error, unexpected <qualified name>, expecting <end of file> [err:XPST0003], <query>:1:107
+ insert node collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs into query collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']
+                                                                                                          ^
+
+dbxml> query { insert node collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs into collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']}
+0 objects returned for eager expression ' insert node collection()//flow[@name='MSS_PM']//groups/group[@name='load']/pre_reqs into collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']'
+
+
+dbxml> print collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']
+
+dbxml> print
+
+dbxml> query  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>0</evalvalue></create_condition><wait><or><evalvalue>{{SYSTEM/RUN/ROLE|lc|eq load}}</evalvalue><evalvalue>{{SYSTEM/GROUPS/LOAD/WAIT/PARSE|default 1|evalBoolean|not}}</evalvalue><evalvalue>{{JLOG///group[@name="parse"]/status/end|default 0|evalBoolean}}</evalvalue></or></wait></pre_reqs>
+
+dbxml> query { delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs/wait}
+0 objects returned for eager expression ' delete node collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs/wait'
+
+
+dbxml>  query  collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MSC_CDR']//groups/group[@name='parse']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>0</evalvalue></create_condition></pre_reqs>
+
+dbxml> exit
+
+
+
+
+*****************************************************************************************************************************************************************************************
+
+
+
+el1961.bc:pmta:/opt/PMT/pmtsys/lib/pmt> dbxml
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]'
+
+
+dbxml> print
+<class>PMTIOChannel</class>
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..'
+
+
+dbxml> print
+<in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params></in>
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../access_mode
+0 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../access_mode'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../in//access_mode
+0 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../in//access_mode'
+
+
+dbxml>  query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode'
+
+
+dbxml> print
+<access_mode>r</access_mode>
+
+dbxml> query { insert node '<deflate>1</deflate>' after collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode }
+0 objects returned for eager expression ' insert node '<deflate>1</deflate>' after collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode '
+
+
+dbxml>  query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..'
+
+
+dbxml> print
+<in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode>&lt;deflate>1&lt;/deflate><result_label>infile</result_label></params></in>
+
+dbxml> query ^C
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//deflate
+0 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//deflate'
+
+
+dbxml> query { delete node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//deflate}
+0 objects returned for eager expression ' delete node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//deflate'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..'
+
+
+dbxml> print
+<in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode>&lt;deflate>1&lt;/deflate><result_label>infile</result_label></params></in>
+
+dbxml> query collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/..
+1 objects returned for eager expression 'collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/..'
+
+
+dbxml> print
+<in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params></in>
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode>&lt;deflate>1&lt;/deflate><result_label>infile</result_label></params>
+
+dbxml> query { replace value of node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params with collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params}
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params with collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params>{{WORKLIST/ITEM}}autorinfile</params>
+
+dbxml>  query collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params>
+
+dbxml> query { replace node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params with collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params}
+0 objects returned for eager expression ' replace node collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params with collection()//flow[@name='MGW']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params>
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><result_label>infile</result_label></params>
+
+dbxml> query { insert node <deflate>1</deflate> after collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode }
+0 objects returned for eager expression ' insert node <deflate>1</deflate> after collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/..//access_mode '
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//class[contains(text(),'PMTIOChannel')]/../params'
+
+
+dbxml> print
+<params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><deflate>1</deflate><result_label>infile</result_label></params>
+
+
+
+*****************************************************************************************************************************************************************************************
+
+
+DAT file clean up
+
+el1960.bc:pmtd:/opt/PMT/etc> dbxml -h /opt/PMT/var/db
+Joined existing environment
+
+dbxml> el1960.bc:pmtd:/opt/PMT/etc>
+el1960.bc:pmtd:/opt/PMT/etc>
+el1960.bc:pmtd:/opt/PMT/etc>
+el1960.bc:pmtd:/opt/PMT/etc>
+el1960.bc:pmtd:/opt/PMT/etc> export DB_ENV=/opt/PMT/var/db
+el1960.bc:pmtd:/opt/PMT/etc> dbxml
+
+dbxml> el1960.bc:pmtd:/opt/PMT/etc> export DB_HOME=/opt/PMT/var/db/
+el1960.bc:pmtd:/opt/PMT/etc> dbxml
+Joined existing environment
+
+dbxml> :q
+stdin:1: :q failed, Unknown command
+
+dbxml> el1960.bc:pmtd:/opt/PMT/etc> cd
+el1960.bc:pmtd:/home/pmtd> vi .bashrc
+el1960.bc:pmtd:/home/pmtd> vi .bash_profile
+el1960.bc:pmtd:/home/pmtd> dbxml
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml> query collection()//flow[@name="MSS_PM"]//group[@name="load"]//step
+1 objects returned for eager expression 'collection()//flow[@name="MSS_PM"]//group[@name="load"]//step'
+
+
+dbxml> print
+<step seq="2" name="load"><call object_name="loader"><method>run</method></call></step>
+
+dbxml> query { insert node <params dataclass="paramset"><param name="cleanup">1</param></params> into collection()//flow[@name="MSS_PM"]//group[@name="load"]//step/call }
+0 objects returned for eager expression ' insert node <params dataclass="paramset"><param name="cleanup">1</param></params> into collection()//flow[@name="MSS_PM"]//group[@name="load"]//step/call '
+
+
+dbxml>  query collection()//flow[@name="MSS_PM"]//group[@name="load"]//step
+1 objects returned for eager expression 'collection()//flow[@name="MSS_PM"]//group[@name="load"]//step'
+
+
+dbxml> print
+<step seq="2" name="load"><call object_name="loader"><method>run</method><params dataclass="paramset"><param name="cleanup">1</param></params></call></step>
+
+dbxml> el1960.bc:pmtd:/home/pmtd> PMTRegister --flowcd MSS_PM --force
+Registering flow run in PMTSysUtils
+Doing DBRegisterFlowRun
+new runid = 8
+registered runid 8 in /opt/PMT/pmtsys/scripts/PMTRegister
+Cleaning up dbxml
+deleting pmtlog
+deleting pmtconf
+this is the end
+el1960.bc:pmtd:/home/pmtd> cd /opt/PMT^C
+el1960.bc:pmtd:/home/pmtd> dbxml
+Joined existing environment
+
+dbxml> openContainer pmt_config.dbxml
+
+dbxml> query collection()//flow[@name='MSS_PM']//looper
+0 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//looper'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//drivers
+0 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//drivers'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//driver
+2 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//driver'
+
+
+dbxml> print
+<driver dataclass="factoryspec"><class>PMTJobManager</class><initparams dataclass="paramset"><param name="config" dataclass="paramset" cardinality="asis"/><param name="process" data_type="xnode"><groups><group name="parse"><pre_reqs/><loopdriver empty_policy="undef">{!RUNTIME/RESOURCES/INFILE_ITERATOR!}</loopdriver><setup><ic_update dataclass="paramset"/></setup><config dataclass="paramset"><param name="parallellism">multiprocessing</param><param name="helper" data_type="xnode"><class>PMTHelperHelper</class><initparams dataclass="paramset"><param name="resultcollector">{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</param><param name="helperscript">PMTPLHelper</param></initparams></param><param name="subprocesses">{{SYSTEM/SETTINGS/CONCURRENCY/PARSE}}</param></config><process_model><objects><object name="parsexml" data_type="xnode" lifecycle="shared"><pre_reqs/><class>ExpatXSParser</class><config data_type="xnode"><saxhandler data_type="xnode"><class>AppModules::SaxHandler_{{SYSTEM/RUN/FLOWCD}}</class></saxhandler><io><in><class>PMTIOChannel</class><params><uri>{{WORKLIST/ITEM}}</uri><io_policy>auto</io_policy><access_mode>r</access_mode><deflate>1</deflate><result_label>infile</result_label></params></in><out><class>PMTSimpleWriter</class><params><directory auto_create="yes">{{SYSTEM/PARAM/ORA_DATAFILE_DIR}}</directory><outfile>{{WORKLIST/ITEM|basename| regReplace xml$ {{_NOW_|formatDateTime %Y%m%d%H%M%S}}.dat}}</outfile><reset_on_init data_type="bool">Y</reset_on_init><mode>file</mode><result_label>oracle_data_file</result_label></params></out></io><gather_statistics data_type="bool">Y</gather_statistics><gather_data_summary data_type="bool">Y</gather_data_summary><get_results_during_run data_type="bool">Y</get_results_during_run></config></object><object name="commonsteps" data_type="xnode" lifecycle="shared"><pre_reqs/><class>PMTCommonSteps</class></object></objects><steps><step name="init" seq="1"><pre_reqs/><call object_name="parsexml"><method>initialize</method><params dataclass="paramset"/></call></step><step name="parse" seq="2"><pre_reqs><wait/></pre_reqs><call object_name="parsexml"><method>run</method><params dataclass="paramset"/><calling_context>scalar</calling_context></call></step><step name="appendresult" target="local" seq="3"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>append</method><params dataclass="paramset"><param name="item">{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//result/oracle_data_file|default FAILEDRES}}</param></params></call></step><step name="archivefile" seq="4"><pre_reqs/><call object_name="commonsteps"><method>moveFile</method><params dataclass="paramset"><param name="file">{{WORKLIST/ITEM}}</param><param name="directory">{{SYSTEM/PARAM/ARCHIVE_DIR}}</param></params></call></step></steps></process_model><end><steps><step name="end_ora_filescollector" seq="1"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>end</method></call></step></steps></end></group><group name="load"><pre_reqs><create_condition><evalvalue>1</evalvalue></create_condition><wait><or><evalvalue>{{SYSTEM/RUN/ROLE|lc|eq load}}</evalvalue><evalvalue>{{SYSTEM/GROUPS/LOAD/WAIT/PARSE|default 1|evalBoolean|not}}</evalvalue><evalvalue>{{JLOG///group[@name="parse"]/status/end|default 0|evalBoolean}}</evalvalue></or></wait></pre_reqs><loopdriver empty_policy="empty_token">{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</loopdriver><setup/><config dataclass="paramset"><param name="parallellism">multiprocessing</param><param name="helper" data_type="xnode"><class>PMTHelperHelper</class><initparams dataclass="paramset"><param name="helperscript">PMTPLHelper</param></initparams></param><param name="subprocesses">{{SYSTEM/SETTINGS/CONCURRENCY/LOAD}}</param></config><end/><process_model><objects><object data_type="xnode" lifecycle="shared" name="loader"><pre_reqs/><class>PMTSimpleSQLLoader</class><config data_type="xnode"><template_dir>{{SYSTEM/PARAM/LOCATION/SQLLDR_TEMPLATE_DIR}}</template_dir><ctlfile_template>{{SYSTEM/PARAM/LOCATION/SQLLDR_CTLFILE_TEMPLATE}}</ctlfile_template><parfile_template>{{SYSTEM/PARAM/LOCATION/SQLLDR_PARFILE_TEMPLATE}}</parfile_template><auth><username/><password/><service/></auth></config></object></objects><steps><step seq="2" name="load"><call object_name="loader"><method>run</method><params dataclass="paramset"><param name="cleanup">1</param></params></call></step></steps></process_model></group></groups><setup><steps><step seq="1" name="create_file_iterator"><pre_reqs/><ic_update dataclass="paramset"><param name="RUNTIME/RESOURCES/INFILE_ITERATOR" data_type="factory"><class>PMTFileIterator</class><initparams dataclass="paramset"><param dataclass="paramset" name="config"><param name="recycle" data_type="bool">Y</param></param><param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/INFILE_DIR}}</param><param name="filepattern">{{SYSTEM/PARAM/INFILE_PATTERN}}</param></param></initparams></param></ic_update></step><step name="create_ora_file_collector" seq="2"><pre_reqs/><ic_update dataclass="paramset"><param name="RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR" data_type="factory"><class>PMTSimpleResultCollector</class><config><batchsize>{{SYSTEM/SETTINGS/CONCURRENCY/LOAD_BATCHSIZE}}</batchsize><force_array data_type="bool">1</force_array><empty_policy>empty_token</empty_policy></config></param></ic_update></step></steps></setup></param></initparams></driver>
+<driver dataclass="factoryspec"><class>PMTSimpleJob</class><config/><initparams dataclass="paramset"><param name="process" data_type="xnode"><setup><steps><step seq="1" name="create_filelist_iterator"><pre_reqs/><ic_update dataclass="paramset"><param data_type="factory" name="RUNTIME/RESOURCES/COLLECTOR_FILES"><class>PMTFileIterator</class><initparams dataclass="paramset"><param dataclass="paramset" name="config"><param name="batchsize">-1</param></param><param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/COLLECTOR/SOURCE/LOCATION}}</param><param name="filepattern">{{SYSTEM/PARAM/COLLECTOR/SOURCE/FILEPATTERN}}</param><param name="filter" data_type="factory"><class>{{SYSTEM/PARAM/COLLECTOR/FILTER/CLASS|default PMTCollectorNoOpFilter}}</class><initparams dataclass="paramset"><param name="historyfile">{{SYSTEM/PARAM/COLLECTOR/HISTORYFILE}}</param></initparams></param></param></initparams></param></ic_update></step></steps></setup><groups><group name="collect"><pre_reqs/><loopdriver empty_policy="undef">{!RUNTIME/RESOURCES/COLLECTOR_FILES!}</loopdriver><process_model><objects><object name="commonsteps" lifecycle="shared" data_type="xnode"><pre_reqs/><class>PMTCommonSteps</class></object></objects><steps><step seq="1" name="collect"><pre_reqs/><call object_name="commonsteps"><method>copyFiles</method><params><param name="target_directory">{{SYSTEM/PARAM/COLLECTOR/TARGET_DIRECTORY}}</param><param name="history_file">{{SYSTEM/PARAM/COLLECTOR/HISTORYFILE}}</param><param name="remove_source" data_type="bool">{{SYSTEM/PARAM/COLLECTOR/REMOVE_SOURCE}}</param><param name="sourcefile">{!WORKLIST/ITEM!}</param></params></call></step></steps></process_model><end/></group></groups></param></initparams></driver>
+
+dbxml> collection()//flow[@name='MSS_PM']//*[contains(text(),'PMTFileIterator')]
+stdin:6: collection()//flow[@name='MSS_PM']//*[contains(text(),'PMTFileIterator')] failed, Unknown command
+
+dbxml> query  collection()//flow[@name='MSS_PM']//*[contains(text(),'PMTFileIterator')]
+2 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//*[contains(text(),'PMTFileIterator')]'
+
+
+dbxml> print
+<class>PMTFileIterator</class>
+<class>PMTFileIterator</class>
+
+dbxml>  query  collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]'
+
+
+dbxml> print
+<class>PMTFileIterator</class>
+
+dbxml> query  collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]/../..
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]/../..'
+
+
+dbxml> print
+<ic_update dataclass="paramset"><param name="RUNTIME/RESOURCES/INFILE_ITERATOR" data_type="factory"><class>PMTFileIterator</class><initparams dataclass="paramset"><param dataclass="paramset" name="config"><param name="recycle" data_type="bool">Y</param></param><param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/INFILE_DIR}}</param><param name="filepattern">{{SYSTEM/PARAM/INFILE_PATTERN}}</param></param></initparams></param></ic_update>
+
+dbxml>  query  collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//role[@name="parse_load"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]'
+
+
+dbxml> print
+<param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/INFILE_DIR}}</param><param name="filepattern">{{SYSTEM/PARAM/INFILE_PATTERN}}</param></param>
+
+dbxml> query  { insert node <param name="maxage">1</param> collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]}^C
+
+dbxml> query collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]'
+
+
+dbxml> print
+<param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/COLLECTOR/SOURCE/LOCATION}}</param><param name="filepattern">{{SYSTEM/PARAM/COLLECTOR/SOURCE/FILEPATTERN}}</param><param name="filter" data_type="factory"><class>{{SYSTEM/PARAM/COLLECTOR/FILTER/CLASS|default PMTCollectorNoOpFilter}}</class><initparams dataclass="paramset"><param name="historyfile">{{SYSTEM/PARAM/COLLECTOR/HISTORYFILE}}</param></initparams></param></param>
+
+dbxml> query  { insert node <param name="minage">1</param> collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]}
+stdin:18: query failed, Error: syntax error, unexpected <qualified name>, expecting as or before or after or into [err:XPST0003], <query>:1:55
+ insert node <param name="maxage">1</param> collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]
+                                                      ^
+
+dbxml>  query  { insert node <param name="maxage">1</param> into collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]}
+0 objects returned for eager expression ' insert node <param name="maxage">1</param> into collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]'
+
+
+dbxml> query collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]
+1 objects returned for eager expression 'collection()//flow[@name='MSS_PM']//role[@name="collect"]//class[contains(text(),'PMTFileIterator')]/../..//param[@name="fileparams"]'
+
+
+dbxml> print
+<param dataclass="paramset" name="fileparams"><param name="directory">{{SYSTEM/PARAM/COLLECTOR/SOURCE/LOCATION}}</param><param name="filepattern">{{SYSTEM/PARAM/COLLECTOR/SOURCE/FILEPATTERN}}</param><param name="filter" data_type="factory"><class>{{SYSTEM/PARAM/COLLECTOR/FILTER/CLASS|default PMTCollectorNoOpFilter}}</class><initparams dataclass="paramset"><param name="historyfile">{{SYSTEM/PARAM/COLLECTOR/HISTORYFILE}}</param></initparams></param><param name="maxage">1</param></param>
+
+
+
+dbrecover -h /opt/PMT/var/db 
+
+for issue -- related to fatal error when disk space gone full!!
+
+*********************************************************************************************************
+In case when you want a step to be evaluated onyl when a condition is met.!! FA
+
+
+dbxml> query collection()//flow[@name='MGW_PM']//step[@name='appendresult']
+1 objects returned for eager expression 'collection()//flow[@name='MGW_PM']//step[@name='appendresult']'
+
+
+dbxml> print
+<step name="appendresult" target="local" seq="3"><pre_reqs/><call><object>{!RUNTIME/RESOURCES/PARSE_RESULTCOLLECTOR!}</object><method>append</method><params dataclass="paramset"><param name="item">{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//result/oracle_data_file|default FAILEDRES}}</param></params></call></step>
+
+dbxml> query collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs/>
+
+dbxml> query { replace value of node query collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs with '^C
+
+dbxml> query { replace node collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs with <pre_reqs><create_condition><evalvalue>{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//status/success|default 0 | evalBoolean}}</evalvalue></create_condition></pre_reqs> }
+0 objects returned for eager expression ' replace node collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs with <pre_reqs><create_condition><evalvalue>{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//status/success|default 0 | evalBoolean}}</evalvalue></create_condition></pre_reqs> '
+
+
+dbxml>  query collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>{JLOG/group[@name="{RUNTIME/EXEC/GROUP}"]//item/detail[text()="{WORKLIST/ITEM}"]/..//status/success|default 0 | evalBoolean}</evalvalue></create_condition></pre_reqs>
+
+dbxml> query { replace value of node collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs/create_condition/evalvalue with '{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//status/success|default 0 | evalBoolean}}' }
+0 objects returned for eager expression ' replace value of node collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs/create_condition/evalvalue with '{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//status/success|default 0 | evalBoolean}}' '
+
+
+dbxml>  query collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs
+1 objects returned for eager expression 'collection()//flow[@name='MGW_PM']//step[@name='appendresult']/pre_reqs'
+
+
+dbxml> print
+<pre_reqs><create_condition><evalvalue>{{JLOG/group[@name="{{RUNTIME/EXEC/GROUP}}"]//item/detail[text()="{{WORKLIST/ITEM}}"]/..//status/success|default 0 | evalBoolean}}</evalvalue></create_condition></pre_reqs>
+
+********************************************************************************************************************************************
+ -- remove locking......
+
+db
+el1960.bc:pmtd:/opt/PMT/var> cp -Rp db db.28MAR2014
+el1960.bc:pmtd:/opt/PMT/var> db_checkpoint -1
+el1960.bc:pmtd:/opt/PMT/var> db_archive -d
+el1960.bc:pmtd:/opt/PMT/var> cd db
+el1960.bc:pmtd:/opt/PMT/var/db> ls
+archive   __db.003  __db.006        log.0000000429  log.0000000496  log.0000000499  log.0000000708             pmt_config.dbxml.bkp               pmt_oconfig.dbxml
+__db.001  __db.004  DB_CONFIG       log.0000000494  log.0000000497  log.0000000504  pmt_config.dbxml           pmt_config.dbxml.bkp.201403122337  redis_pmt.db
+__db.002  __db.005  log.0000000382  log.0000000495  log.0000000498  log.0000000558  pmt_config.dbxml.20140303  pmt_log.dbxml
+el1960.bc:pmtd:/opt/PMT/var/db> rm log.*
+rm: remove regular file `log.0000000382'? ^C
+el1960.bc:pmtd:/opt/PMT/var/db> rm -f log.*
+el1960.bc:pmtd:/opt/PMT/var/db> ls
+archive   __db.002  __db.004  __db.006   pmt_config.dbxml           pmt_config.dbxml.bkp               pmt_log.dbxml      redis_pmt.db
+__db.001  __db.003  __db.005  DB_CONFIG  pmt_config.dbxml.20140303  pmt_config.dbxml.bkp.201403122337  pmt_oconfig.dbxml
+el1960.bc:pmtd:/opt/PMT/var/db> rm __db.00*
+rm: remove regular file `__db.001'? ^C
+el1960.bc:pmtd:/opt/PMT/var/db> rm -rf __db.00*
+el1960.bc:pmtd:/opt/PMT/var/db> ls
+archive  DB_CONFIG  pmt_config.dbxml  pmt_config.dbxml.20140303  pmt_config.dbxml.bkp  pmt_config.dbxml.bkp.201403122337  pmt_log.dbxml  pmt_oconfig.dbxml  redis_pmt.db
+el1960.bc:pmtd:/opt/PMT/var/db> vi DB_CONFIG
+el1960.bc:pmtd:/opt/PMT/var/db> cd /opt/PMT/pmtsys/scripts/
+el1960.bc:pmtd:/opt/PMT/pmtsys/scripts> ls
+archive       defdblookupresource.pl  pmt_config.dump  PMTCreateDBEnv.keep  PMTPLHelper      PMTRunner               PMTXMLDropFlowDef  testscripts
+cleansems.sh  iPrkFgyXrg.log          PMTConfigViewer  PMTDB                PMTPLHelper.cmp  PMTRunner.23MAR2014     PMTXMLDumpFlowDef  UjaQDkMxvo.log
+defdbconn.pl  PMTClose                PMTCreateDBEnv   PMTGetCurrentRunId   PMTRegister      PMTRunner.bkp.20140313  PMTXMLLoadFlowDef
+el1960.bc:pmtd:/opt/PMT/pmtsys/scripts> ./PMTCreateDBEnv
+Using DB_HOME /opt/PMT/var/db/
+The environment does not yet exist. All appears to be well
+do we get here now ?
+and here ?
+and  got forbid, here ?
+this would be pushing it, here ?
+DB Environment created in /opt/PMT/var/db/
+Do I survive the final close ?
+el1960.bc:pmtd:/opt/PMT/pmtsys/scripts> cd /opt/PMT/var/db
+el1960.bc:pmtd:/opt/PMT/var/db> ls
+archive   __db.002  DB_CONFIG         pmt_config.dbxml.20140303  pmt_config.dbxml.bkp.201403122337  pmt_oconfig.dbxml
+__db.001  __db.003  pmt_config.dbxml  pmt_config.dbxml.bkp       pmt_log.dbxml                      redis_pmt.db
+
+
+
+
+
+
+
+
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='MSS_PM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='MSSTGO_PM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='MGW_PM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='MGWTGO_PM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='SPGW_CDR']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='OTA_PM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='HWE_CM']//role[@name='parse_load']/settings }
+query { insert node <param name='SYSTEM/MONITORING/ENABLED'>{{CONFIG/settings/monitoring.enabled|default 0|evalBoolean}}</param> into collection()//flow[@name='MSC_CDR']//role[@name='parse_load']/settings }
+
+
+
+
+
+********************************** to get a node with two attributes*****************************************
+
+query collection()//flow[@name="MSS_PM"][@runid="1"]/@name
+
+************************************************************************************************************ 
+
+
+<pre_req>
+	<create_condition >
+		<evalvalue>
+			
+		</evalvalue>
+	</create_condition>
+</pre_req>
+
+
+                <pre_reqs>
+                  <create_condition>
+                    <evalvalue>0</evalvalue>
+                  </create_condition>
+
+
+
+**************************************************   ConfigViewer
+
+PMTConfigViewer --flowcd MSS_PM --role parse_load
+
+getic //JOBDEF
+
+
+PMTXMLDumpFlowDef --flowcd MSS_PM --outfile /tmp/mss_pm --pretty
+
+PMTXMLLoadFlowDef --infile /tmp/mss_pm   --forceall --register
+
+
+**********************************************************************************************
+
+PMTExecContext --> PMTStachedDataHandler
+
+
+ic = new PMTExecContext();
+
+Interceptors		Helpers
+
+
+sub partial --> craete a function on fly with some parameter already filled in. -- > subroutine to make another subroutine on the fly!!
+
+
+my a = sub { };
+
+partial ('Mymod::myFunc')
+
+PMTIOSemSentinel ->
+
+for communication between PMTHelperHelper and PMTPLHelper
+
+
