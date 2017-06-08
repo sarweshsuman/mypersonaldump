@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PlatformMessage>
+    <Message>
+                <TopicName>MLFramework</TopicName>
+                <Sender>Platform</Sender>
+                <EventType>START</EventType>
+                <AppName>ObjectClassifier</AppName>
+                <ComponentName>MLFramework</ComponentName>
+                <Domain>Aricent</Domain>
+                <ProcessId>10201010</ProcessId>
+                <JobType>STREAM</JobType>
+    </Message>
+    <ComponentConfig>
+        <Component>
+            <ComponentID>002</ComponentID>
+            <ComponentParent>MLFramework</ComponentParent>
+            <ComponentName>ImageClassification</ComponentName>
+            <PropertyConfig>
+                <InputConfiguration>
+                    <Property PropertyID="">
+                        <PropertyName>type</PropertyName>
+                        <PropertyValue>operand</PropertyValue>
+                    </Property>
+                    <Property PropertyID="">
+                        <PropertyName>operator</PropertyName>
+                        <PropertyValue>Train</PropertyValue>
+                    </Property>
+                    <Property PropertyID="">
+                        <PropertyName>image_height</PropertyName>
+                        <PropertyValue>28</PropertyValue>
+                    </Property>
+                    <Property PropertyID="">
+                        <PropertyName>image_width</PropertyName>
+                        <PropertyValue>28</PropertyValue>
+                    </Property>
+                    <Property PropertyID="002">
+                        <PropertyName>num_classes</PropertyName>
+                        <PropertyValue>10</PropertyValue>
+                    </Property>
+                    <Property PropertyID="002">
+                        <PropertyName>filter_height</PropertyName>
+                        <PropertyValue>5</PropertyValue>
+                    </Property>
+                    <Property PropertyID="002">
+                        <PropertyName>filter_width</PropertyName>
+                        <PropertyValue>5</PropertyValue>
+                    </Property>
+                    <Property PropertyID="002">
+                        <PropertyName>num_filters_per_layer</PropertyName>
+                        <PropertyValue>32,64</PropertyValue>
+                    </Property>
+                </InputConfiguration>
+                <InputDataFormat/>
+                <OutputConfiguration/>
+                <OutputDataFormat/>
+            </PropertyConfig>
+        </Component>
+        <Component>
+            <ComponentID>003</ComponentID>
+            <ComponentParent>MLFramework</ComponentParent>
+            <ComponentName>Train</ComponentName>
+            <PropertyConfig>
+                <InputConfiguration>
+                    <Property PropertyID="001">
+                        <PropertyName>type</PropertyName>
+                        <PropertyValue>operator</PropertyValue>
+                    </Property>
+                    <Property PropertyID="002">
+                         <PropertyName>serial_number</PropertyName>
+                        <PropertyValue>0</PropertyValue>
+                    </Property>
+                    <Property PropertyID="001">
+                        <PropertyName>operator_package</PropertyName>
+                        <PropertyValue>main.utils.models.tensorflow.train.train</PropertyValue>
+                    </Property>
+                    <Property PropertyID="001">
+                        <PropertyName>operator_class</PropertyName>
+                        <PropertyValue>Train</PropertyValue>
+                    </Property>
+                    <Property PropertyID="001">
+                        <PropertyName>train/model_package_name</PropertyName>
+                        <PropertyValue>main.models.tensorflow.classification.image.classification_model</PropertyValue>
+                    </Property>
+                    <Property PropertyID="001">
+                        <PropertyName>train/model_name</PropertyName>
+                        <PropertyValue>main.models.tensorflow.classification.image.classification_model</PropertyValue>
+                    </Property>
+                </InputConfiguration>
+                <InputDataFormat/>
+                <OutputConfiguration/>
+                <OutputDataFormat/>
+            </PropertyConfig>
+        </Component>
+                <Component>
+                                <ComponentID>002</ComponentID>
+                                <ComponentParent>SPARK</ComponentParent>
+                                <ComponentName>Transformer IOT</ComponentName>
+                                <PropertyConfig/>
+                </Component>
+        <Component>
+            <ComponentID>004</ComponentID>
+            <ComponentParent>SPARK</ComponentParent>
+            <ComponentName>Spark-CASSANDRA Write</ComponentName>
+            <PropertyConfig>
+                <InputConfiguration>
+                                        <Property PropertyID="001">
+                                                <PropertyName>spark.driver.allowMultipleContexts</PropertyName>
+                                                <PropertyValue>true</PropertyValue>
+                                        </Property>
+                                        <Property PropertyID="001">
+                                                <PropertyName>spark.cassandra.connection.host</PropertyName>
+                                                <PropertyValue>10.203.238.213</PropertyValue>
+                                        </Property>
+                                        <Property PropertyID="002">
+                                                        <PropertyName>port</PropertyName>
+                                                        <PropertyValue>9042</PropertyValue>
+                                        </Property>
+                                        <Property PropertyID="004">
+                                                        <PropertyName>Schema-keyspace</PropertyName>
+                                                        <PropertyValue>iotdata1</PropertyValue>
+                                        </Property>
+                                        <Property PropertyID="005">
+                                                        <PropertyName>Schema-table</PropertyName>
+                                                        <PropertyValue>coordinate</PropertyValue>
+                                        </Property>
+                                        <Property PropertyID="005">
+                                                        <PropertyName>spark.cassandra.input.consistency.level</PropertyName>
+                                                        <PropertyValue>ONE</PropertyValue>
+                                        </Property>
+
+                </InputConfiguration>
+                <InputDataFormat/>
+                <OutputConfiguration/>
+                <OutputDataFormat/>
+            </PropertyConfig>
+        </Component>
+    </ComponentConfig>
+</PlatformMessage>
