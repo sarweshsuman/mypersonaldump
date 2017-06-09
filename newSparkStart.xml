@@ -83,51 +83,16 @@
                     </Property>
                     <Property PropertyID="001">
                         <PropertyName>train/model_name</PropertyName>
-                        <PropertyValue>main.models.tensorflow.classification.image.classification_model</PropertyValue>
+                        <PropertyValue>ImageClassification</PropertyValue>
                     </Property>
-                </InputConfiguration>
-                <InputDataFormat/>
-                <OutputConfiguration/>
-                <OutputDataFormat/>
-            </PropertyConfig>
-        </Component>
-                <Component>
-                                <ComponentID>002</ComponentID>
-                                <ComponentParent>SPARK</ComponentParent>
-                                <ComponentName>Transformer IOT</ComponentName>
-                                <PropertyConfig/>
-                </Component>
-        <Component>
-            <ComponentID>004</ComponentID>
-            <ComponentParent>SPARK</ComponentParent>
-            <ComponentName>Spark-CASSANDRA Write</ComponentName>
-            <PropertyConfig>
-                <InputConfiguration>
-                                        <Property PropertyID="001">
-                                                <PropertyName>spark.driver.allowMultipleContexts</PropertyName>
-                                                <PropertyValue>true</PropertyValue>
-                                        </Property>
-                                        <Property PropertyID="001">
-                                                <PropertyName>spark.cassandra.connection.host</PropertyName>
-                                                <PropertyValue>10.203.238.213</PropertyValue>
-                                        </Property>
-                                        <Property PropertyID="002">
-                                                        <PropertyName>port</PropertyName>
-                                                        <PropertyValue>9042</PropertyValue>
-                                        </Property>
-                                        <Property PropertyID="004">
-                                                        <PropertyName>Schema-keyspace</PropertyName>
-                                                        <PropertyValue>iotdata1</PropertyValue>
-                                        </Property>
-                                        <Property PropertyID="005">
-                                                        <PropertyName>Schema-table</PropertyName>
-                                                        <PropertyValue>coordinate</PropertyValue>
-                                        </Property>
-                                        <Property PropertyID="005">
-                                                        <PropertyName>spark.cassandra.input.consistency.level</PropertyName>
-                                                        <PropertyValue>ONE</PropertyValue>
-                                        </Property>
-
+                    <Property PropertyID="001">
+                        <PropertyName>train/epochs</PropertyName>
+                        <PropertyValue>1000</PropertyValue>
+                    </Property>
+                    <Property PropertyID="001">
+                        <PropertyName>train/batch_size</PropertyName>
+                        <PropertyValue>50</PropertyValue>
+                    </Property>
                 </InputConfiguration>
                 <InputDataFormat/>
                 <OutputConfiguration/>
